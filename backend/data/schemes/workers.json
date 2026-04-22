@@ -1,0 +1,302 @@
+[
+  {
+    "title": "MGNREGA",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Providing 100 days of guaranteed wage employment to rural households.",
+    "eligibility": { "occupations": ["daily_wage", "unemployed"], "residence": "rural" },
+    "benefits": "Guaranteed manual work at government-fixed minimum wages.",
+    "applyLink": "https://nrega.nic.in/",
+    "tags": ["employment", "rural", "guarantee"]
+  },
+  {
+    "title": "PM Shram Yogi Maan-Dhan (PM-SYM)",
+    "state": "Central",
+    "category": "Pension",
+    "description": "Pension scheme for unorganized sector workers like rickshaw pullers and domestic workers.",
+    "eligibility": { "occupations": ["daily_wage", "self_employed"], "ageMin": 18, "ageMax": 40, "incomeMax": 180000 },
+    "benefits": "Monthly pension of ₹3,000 after reaching age 60.",
+    "applyLink": "https://maandhan.in/",
+    "tags": ["pension", "unorganized", "security"]
+  },
+  {
+    "title": "Ayushman Bharat-PMJAY",
+    "state": "Central",
+    "category": "Healthcare",
+    "description": "Health insurance for vulnerable and low-income families.",
+    "eligibility": { "occupations": ["daily_wage", "unemployed"], "isBPLRequired": true },
+    "benefits": "Health cover of ₹5 lakh per family per year for hospitalization.",
+    "applyLink": "https://pmjay.gov.in/",
+    "tags": ["health", "insurance", "hospital"]
+  },
+  {
+    "title": "PM Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "state": "Central",
+    "category": "Insurance",
+    "description": "Low-cost life insurance scheme for bank account holders.",
+    "eligibility": { "ageMin": 18, "ageMax": 50 },
+    "benefits": "Life cover of ₹2 lakh in case of death due to any reason.",
+    "applyLink": "https://jansuraksha.gov.in/",
+    "tags": ["life insurance", "security"]
+  },
+  {
+    "title": "PM Suraksha Bima Yojana (PMSBY)",
+    "state": "Central",
+    "category": "Insurance",
+    "description": "Accident insurance scheme with a very low annual premium.",
+    "eligibility": { "ageMin": 18, "ageMax": 70 },
+    "benefits": "₹2 lakh for accidental death or total disability.",
+    "applyLink": "https://jansuraksha.gov.in/",
+    "tags": ["accident insurance", "disability"]
+  },
+  {
+    "title": "PM Awas Yojana - Gramin (PMAY-G)",
+    "state": "Central",
+    "category": "Housing",
+    "description": "Providing affordable housing to rural poor.",
+    "eligibility": { "residence": "rural", "isBPLRequired": true },
+    "benefits": "Financial assistance of ₹1.2 lakh to ₹1.3 lakh to build a pucca house.",
+    "applyLink": "https://pmayg.nic.in/",
+    "tags": ["house", "housing", "rural"]
+  },
+  {
+    "title": "PM SVANidhi",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Collateral-free micro-credit for street vendors.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Working capital loan up to ₹10,000 with interest subsidy.",
+    "applyLink": "https://pmsvanidhi.mohua.gov.in/",
+    "tags": ["vendor", "loan", "street vendor"]
+  },
+  {
+    "title": "DDU-GKY (Skill Training)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Placement-linked skill training program for rural youth.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"], "ageMin": 15, "ageMax": 35, "residence": "rural" },
+    "benefits": "Free skill training, placement support, and career counseling.",
+    "applyLink": "https://ddugky.gov.in/",
+    "tags": ["skills", "rural youth", "jobs"]
+  },
+  {
+    "title": "Atal Pension Yojana (APY)",
+    "state": "Central",
+    "category": "Pension",
+    "description": "Pension scheme for all citizens, especially in the unorganized sector.",
+    "eligibility": { "ageMin": 18, "ageMax": 40 },
+    "benefits": "Fixed monthly pension ranging from ₹1,000 to ₹5,000.",
+    "applyLink": "https://npscra.nsdl.co.in/",
+    "tags": ["pension", "unorganized", "savings"]
+  },
+  {
+    "title": "PM Ujjwala Yojana",
+    "state": "Central",
+    "category": "Households",
+    "description": "Providing clean cooking fuel (LPG) to women from BPL families.",
+    "eligibility": { "gender": ["female"], "isBPLRequired": true },
+    "benefits": "Deposit-free LPG connection and financial assistance for stove.",
+    "applyLink": "https://www.pmuy.gov.in/",
+    "tags": ["lpg", "cooking", "women"]
+  },
+  {
+    "title": "National Food Security Act (NFSA)",
+    "state": "Central",
+    "category": "Food Security",
+    "description": "Ensuring access to essential food grains at highly subsidized prices.",
+    "eligibility": { "isBPLRequired": true },
+    "benefits": "5 kg of food grains per person per month at ₹1-3 per kg.",
+    "applyLink": "https://nfsa.gov.in/",
+    "tags": ["ration", "food grains", "bpl"]
+  },
+  {
+    "title": "PM Garib Kalyan Anna Yojana",
+    "state": "Central",
+    "category": "Food Security",
+    "description": "Free food grains to NFSA beneficiaries to mitigate economic hardship.",
+    "eligibility": { "isBPLRequired": true },
+    "benefits": "Additional 5 kg rice/wheat per person free of cost.",
+    "applyLink": "https://pib.gov.in/",
+    "tags": ["free food", "ration", "relief"]
+  },
+  {
+    "title": "Deendayal Antyodaya Yojana (NULM)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Urban livelihoods mission to reduce poverty of urban poor households.",
+    "eligibility": { "residence": "urban" },
+    "benefits": "Support for SHGs, skill training, and street vendor welfare.",
+    "applyLink": "https://nulm.gov.in/",
+    "tags": ["urban", "livelihood", "poverty"]
+  },
+  {
+    "title": "National Social Assistance Programme",
+    "state": "Central",
+    "category": "Pension",
+    "description": "Pensions for elderly, widows, and persons with disabilities.",
+    "eligibility": { "isBPLRequired": true },
+    "benefits": "Financial assistance for elderly (IGNOAPS) and widows (IGNWPS).",
+    "applyLink": "https://nsap.nic.in/",
+    "tags": ["pension", "elderly", "widow"]
+  },
+  {
+    "title": "PM-eBus Sewa",
+    "state": "Central",
+    "category": "Infrastructure",
+    "description": "Augmenting city bus operations with focused on e-buses.",
+    "eligibility": { "residence": "urban" },
+    "benefits": "Better and cheaper transportation for urban laborers.",
+    "applyLink": "https://pib.gov.in/",
+    "tags": ["transport", "electric bus", "urban"]
+  },
+  {
+    "title": "Gig Workers Social Security Act",
+    "state": "Karnataka",
+    "category": "Social Welfare",
+    "description": "First-of-its kind law to provide social security to platform-based workers like Swiggy/Zomato/Dunzo.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Welfare fund, accident and health insurance for gig workers.",
+    "applyLink": "https://sevasindhu.karnataka.gov.in/",
+    "tags": ["gig workers", "insurance", "welfare fund"]
+  },
+  {
+    "title": "BOCW Pension Scheme",
+    "state": "Karnataka",
+    "category": "Pension",
+    "description": "Pension for registered construction workers.",
+    "eligibility": { "occupations": ["daily_wage"], "ageMin": 60 },
+    "benefits": "Monthly pension of ₹1,000 to ₹1,500 for life.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["construction workers", "pension", "bocw"]
+  },
+  {
+    "title": "Accident Compensation (BOCW)",
+    "state": "Karnataka",
+    "category": "Insurance",
+    "description": "Immediate financial relief to construction workers in case of onsite accidents.",
+    "eligibility": { "occupations": ["daily_wage"] },
+    "benefits": "₹5 lakh for death and up to ₹2 lakh for disability.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["accident", "compensation", "bocw"]
+  },
+  {
+    "title": "Educational Assistance for Workers' Children",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Financial help for education of children of registered construction workers.",
+    "eligibility": { "occupations": ["daily_wage"] },
+    "benefits": "₹1,500 to ₹15,000 per year from school to professional courses.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["scholarship", "worker children", "bocw"]
+  },
+  {
+    "title": "Maternity Benefits for Registered Workers",
+    "state": "Karnataka",
+    "category": "Social Welfare",
+    "description": "Cash support for female workers registered with the labor board during pregnancy.",
+    "eligibility": { "occupations": ["daily_wage"], "gender": ["female"] },
+    "benefits": "Financial assistance of ₹30,000-50,000 for maternity.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["maternity", "women workers", "bocw"]
+  },
+  {
+    "title": "Marriage Assistance for Workers",
+    "state": "Karnataka",
+    "category": "Social Welfare",
+    "description": "Grant for the marriage of registered workers or their children.",
+    "eligibility": { "occupations": ["daily_wage"] },
+    "benefits": "Financial gift of ₹50,000 for marriage expenses.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["marriage", "grant", "bocw"]
+  },
+  {
+    "title": "Ambedkar Labour Assistance",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Distribution of free toolkits to laborers like barbers, masons, and cobblers.",
+    "eligibility": { "occupations": ["daily_wage", "self_employed"] },
+    "benefits": "Free specialized toolkits worth ₹10,000.",
+    "applyLink": "https://labour.karnataka.gov.in/",
+    "tags": ["tools", "toolkit", "livelihood"]
+  },
+  {
+    "title": "Thayi Bhagya",
+    "state": "Karnataka",
+    "category": "Healthcare",
+    "description": "Ensuring safe institutional deliveries for poor families.",
+    "eligibility": { "gender": ["female"], "isBPLRequired": true },
+    "benefits": "Free delivery in private hospitals and cash incentive.",
+    "applyLink": "https://hfw.karnataka.gov.in/",
+    "tags": ["maternity", "health", "hospital"]
+  },
+  {
+    "title": "Udyogini Scheme",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Subsidy in loans for women to start micro-businesses.",
+    "eligibility": { "gender": ["female"], "ageMin": 18, "ageMax": 55, "incomeMax": 150000 },
+    "benefits": "Up to 30% subsidy on loans for starting stalls or small shops.",
+    "applyLink": "https://ksfdc.karnataka.gov.in/",
+    "tags": ["women entrepreneur", "loan", "subsidy"]
+  },
+  {
+    "title": "Kayaka Scheme",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Zero percent interest loans for Self Help Groups (SHGs).",
+    "eligibility": { "occupations": ["daily_wage", "self_employed"] },
+    "benefits": "Zero interest on loans up to ₹5 lakh for SHGs.",
+    "applyLink": "https://rdpr.karnataka.gov.in/",
+    "tags": ["shg", "loan", "zero interest"]
+  },
+  {
+    "title": "Badavara Bandhu",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Interest-free mobile bank for street vendors.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Interest-free daily loans up to ₹10,000 for small trades.",
+    "applyLink": "https://cooperation.karnataka.gov.in/",
+    "tags": ["street vendor", "interest-free", "loan"]
+  },
+  {
+    "title": "Charmashilpa Scheme",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Support for leather artisans to modernize their produce.",
+    "eligibility": { "occupations": ["daily_wage", "self_employed"], "castes": ["sc"] },
+    "benefits": "Grants for modern machines and work sheds.",
+    "applyLink": "https://lidkar.com/",
+    "tags": ["leather", "artisan", "sc"]
+  },
+  {
+    "title": "Madilu Kit",
+    "state": "Karnataka",
+    "category": "Healthcare",
+    "description": "Essential kit for new mothers and babies from labor families.",
+    "eligibility": { "gender": ["female"], "isBPLRequired": true },
+    "benefits": "Kit containing towels, soaps, clothes for baby and mother.",
+    "applyLink": "https://hfw.karnataka.gov.in/",
+    "tags": ["baby kit", "maternity", "health"]
+  },
+  {
+    "title": "Bus Pass for Building Workers",
+    "state": "Karnataka",
+    "category": "Transport",
+    "description": "Free bus passes for construction workers for city commuting.",
+    "eligibility": { "occupations": ["daily_wage"] },
+    "benefits": "Free monthly bus pass in Bangalore (BMTC) and elsewhere.",
+    "applyLink": "https://karwb.karnataka.gov.in/",
+    "tags": ["bus pass", "free travel", "workers"]
+  },
+  {
+    "title": "Karnataka Labour Welfare Board Educational Assistance",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Scholarship for children of workers in industries and factories.",
+    "eligibility": { "occupations": ["daily_wage"], "incomeMax": 250000 },
+    "benefits": "₹3,000 to ₹10,000 per year for students.",
+    "applyLink": "https://klwb.karnataka.gov.in/",
+    "tags": ["scholarship", "industry workers"]
+  }
+]

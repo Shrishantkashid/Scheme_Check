@@ -1,0 +1,302 @@
+[
+  {
+    "title": "PM MUDRA Yojana (PMMY)",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Collateral-free loans up to ₹10 lakh to micro/small business entities.",
+    "eligibility": { "occupations": ["self_employed", "unemployed"] },
+    "benefits": "Loan categories: Shishu (up to ₹50k), Kishore (₹50k-5L), Tarun (₹5L-10L).",
+    "applyLink": "https://www.mudra.org.in/",
+    "tags": ["loan", "startup", "micro business"]
+  },
+  {
+    "title": "PMEGP (Prime Minister Employment Generation Programme)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Credit-linked subsidy scheme for setting up new micro-enterprises.",
+    "eligibility": { "occupations": ["self_employed", "unemployed"], "ageMin": 18 },
+    "benefits": "Subsidy of 15% to 35% on project costs up to ₹50 lakh.",
+    "applyLink": "https://www.kviconline.gov.in/pmegpeportal/",
+    "tags": ["subsidy", "loan", "manufacturing", "service"]
+  },
+  {
+    "title": "Stand-Up India Scheme",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Facilitating bank loans to SC/ST and women entrepreneurs for greenfield enterprises.",
+    "eligibility": { "occupations": ["self_employed"], "castes": ["sc", "st"], "gender": ["female"] },
+    "benefits": "Loans between ₹10 lakh and ₹1 crore for starting a business.",
+    "applyLink": "https://www.standupmitra.in/",
+    "tags": ["sc", "st", "women", "loan"]
+  },
+  {
+    "title": "PM Vishwakarma Scheme",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Comprehensive support for artisans and craftspeople.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Skill training, ₹15,000 toolkit grant, and collateral-free credit support.",
+    "applyLink": "https://pmvishwakarma.gov.in/",
+    "tags": ["artisan", "crafts", "training"]
+  },
+  {
+    "title": "Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Guarantee cover for collateral-free credit facilities to MSEs.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Collateral-free loans up to ₹2 crore for small businesses.",
+    "applyLink": "https://www.cgtmse.in/",
+    "tags": ["credit guarantee", "no collateral", "msme"]
+  },
+  {
+    "title": "MSME Champion Scheme",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Integrated scheme for MSME development including digital and design support.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Subsidies for innovation, digitisation, and sustainable manufacturing.",
+    "applyLink": "https://champions.gov.in/",
+    "tags": ["msme", "champions", "modernization"]
+  },
+  {
+    "title": "SFURTI (Cluster Development)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Organizing traditional industries and artisans into clusters.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Financial assistance for common facility centers and marketing.",
+    "applyLink": "https://sfurti.msme.gov.in/",
+    "tags": ["cluster", "traditional industry", "khadi"]
+  },
+  {
+    "title": "Startup India Seed Fund",
+    "state": "Central",
+    "category": "Startup",
+    "description": "Financial assistance to startups for proof of concept and prototype development.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Grants up to ₹20 lakh and debt/convertible debentures up to ₹50 lakh.",
+    "applyLink": "https://seedfund.startupindia.gov.in/",
+    "tags": ["startup", "seed fund", "innovation"]
+  },
+  {
+    "title": "PM Formalization of Micro Food Processing Enterprises (PMFME)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Support for micro food processing units to formalize and upgrade.",
+    "eligibility": { "occupations": ["self_employed", "farmer"] },
+    "benefits": "Credit-linked subsidy of 35% on project costs up to ₹10 lakh.",
+    "applyLink": "https://pmfme.mofpi.gov.in/",
+    "tags": ["food processing", "micro enterprise", "subsidy"]
+  },
+  {
+    "title": "ASPIRE Scheme",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Promotion of innovation, rural industry, and entrepreneurship.",
+    "eligibility": { "occupations": ["self_employed", "unemployed"] },
+    "benefits": "Setting up of Livelihood Business Incubators (LBIs).",
+    "applyLink": "https://aspire.msme.gov.in/",
+    "tags": ["innovation", "rural industry", "incubation"]
+  },
+  {
+    "title": "ZED Certification Scheme",
+    "state": "Central",
+    "category": "Manufacturing",
+    "description": "Certification for MSMEs to adopt Zero Defect Zero Effect practices.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Financial assistance for certification and training.",
+    "applyLink": "https://zed.msme.gov.in/",
+    "tags": ["quality", "manufacturing", "certification"]
+  },
+  {
+    "title": "NSIC Marketing Assistance",
+    "state": "Central",
+    "category": "Marketing",
+    "description": "Assisting MSMEs in marketing their products and services.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Support for exhibitions, buyer-seller meets, and online portals.",
+    "applyLink": "https://www.nsic.co.in/",
+    "tags": ["marketing", "exhibitions", "msme"]
+  },
+  {
+    "title": "CLCSS (Credit Linked Capital Subsidy Scheme)",
+    "state": "Central",
+    "category": "Manufacturing",
+    "description": "Facilitating technology upgradation by providing upfront capital subsidy.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "15% capital subsidy for induction of well-established technology.",
+    "applyLink": "https://clcss.in/",
+    "tags": ["technology", "subsidy", "modernization"]
+  },
+  {
+    "title": "One District One Product (ODOP)",
+    "state": "Central",
+    "category": "Marketing",
+    "description": "Identifying and promoting a unique product from each district.",
+    "eligibility": { "occupations": ["self_employed", "artisan"] },
+    "benefits": "Market linkages and branding support for local products.",
+    "applyLink": "https://www.odopcentral.in/",
+    "tags": ["local products", "branding", "district"]
+  },
+  {
+    "title": "Self Employment Lending (National Corporations)",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Term loans for SC/ST/OBC/Handicapped to start small businesses.",
+    "eligibility": { "castes": ["sc", "st", "obc"], "incomeMax": 300000 },
+    "benefits": "Low-interest loans with repayment periods up to 10 years.",
+    "applyLink": "https://nsfdc.nic.in/",
+    "tags": ["loan", "backward classes", "entrepreneurship"]
+  },
+  {
+    "title": "Chief Minister’s Self Employment Generation Programme (CMEGP)",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Generating employment in rural and urban areas through micro-enterprises.",
+    "eligibility": { "occupations": ["self_employed", "unemployed"], "ageMin": 18, "ageMax": 45 },
+    "benefits": "Subsidy of up to 35% on project costs up to ₹25 lakh.",
+    "applyLink": "https://cmegp.kar.nic.in/",
+    "tags": ["karnataka", "subsidy", "self-employment"]
+  },
+  {
+    "title": "Udyogini (Women Welfare)",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Assisting women to start micro-businesses with loan subsidies.",
+    "eligibility": { "gender": ["female"], "ageMin": 18, "ageMax": 55, "incomeMax": 150000 },
+    "benefits": "Subsidy of 30% for general and 33.3% for SC/ST women.",
+    "applyLink": "https://ksfdc.karnataka.gov.in/",
+    "tags": ["women empowerment", "loan", "karnataka"]
+  },
+  {
+    "title": "KMDC Self-Employment Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Economic individual development loan for minority community members.",
+    "eligibility": { "occupations": ["self_employed"], "incomeMax": 200000 },
+    "benefits": "Loan up to ₹2 lakh with 50% subsidy for starting a business.",
+    "applyLink": "https://kmdc.karnataka.gov.in/",
+    "tags": ["minority", "subsidy", "loan"]
+  },
+  {
+    "title": "Dr. Ambedkar Development Corporation Self-Employment Scheme",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Direct lending and bank tied-up loans for SC entrepreneurs.",
+    "eligibility": { "castes": ["sc"], "occupations": ["self_employed"] },
+    "benefits": "Zero-interest/Low-interest loans and subsidies for enterprises.",
+    "applyLink": "https://adcl.karnataka.gov.in/",
+    "tags": ["sc", "subsidy", "loan"]
+  },
+  {
+    "title": "Vishwakarma Communities Development Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Support for traditional artisans from Vishwakarma communities.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Loan up to ₹2 lakh for purchase of modern tools and raw materials.",
+    "applyLink": "https://kvcdc.karnataka.gov.in/",
+    "tags": ["artisan", "traditional", "tools"]
+  },
+  {
+    "title": "KSTDC Tourist Taxi Scheme",
+    "state": "Karnataka",
+    "category": "Transport",
+    "description": "Financial assistance for unemployed youth to purchase tourist taxis.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"], "ageMin": 18 },
+    "benefits": "Subsidy of up to ₹3 lakh on purchase of a tourist vehicle.",
+    "applyLink": "https://kstdc.nic.in/",
+    "tags": ["taxi", "tourism", "subsidy"]
+  },
+  {
+    "title": "Unnati Scheme (Social Startups)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Supporting startups that address social issues through innovation.",
+    "eligibility": { "occupations": ["self_employed"], "castes": ["sc", "st"] },
+    "benefits": "Grant of up to ₹50 lakh for SC/ST entrepreneurs.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["startup", "grant", "sc", "st"]
+  },
+  {
+    "title": "Badavara Bandhu (Mobile Bank)",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Interest-free loans for street vendors to escape money lenders.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Daily interest-free loans of ₹10,000 for small business capital.",
+    "applyLink": "https://cooperation.karnataka.gov.in/",
+    "tags": ["street vendor", "interest-free"]
+  },
+  {
+    "title": "Devaraj Urs Backward Classes Development Direct Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Self-employment loans for individuals from backward classes.",
+    "eligibility": { "castes": ["obc"], "incomeMax": 150000 },
+    "benefits": "Loans up to ₹1 lakh with 20-30% back-end subsidy.",
+    "applyLink": "https://dbcdc.karnataka.gov.in/",
+    "tags": ["obc", "loan", "karnataka"]
+  },
+  {
+    "title": "Karnataka Handloom Development Corporation (KHDC) Support",
+    "state": "Karnataka",
+    "category": "Textiles",
+    "description": "Assistance to handloom weavers for modernization and marketing.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"] },
+    "benefits": "Provision of modern looms and yarn at subsidized rates.",
+    "applyLink": "https://khdc.karnataka.gov.in/",
+    "tags": ["weave", "handloom", "textiles"]
+  },
+  {
+    "title": "Cauvery Handicrafts (KSHDCL) Artisan Kits",
+    "state": "Karnataka",
+    "category": "Artisan",
+    "description": "Modern toolkits and training for handicraft artisans.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Free modern tools and opportunity to sell in Cauvery emporiums.",
+    "applyLink": "https://cauveryhandicrafts.net/",
+    "tags": ["artisan", "handicrafts", "kit"]
+  },
+  {
+    "title": "Elevate (Startup Karnataka)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Flagship grant-in-aid scheme for startups across various sectors.",
+    "eligibility": { "occupations": ["self_employed"] },
+    "benefits": "Grants ranging from ₹5 lakh up to ₹50 lakh for selected startups.",
+    "applyLink": "https://startup.karnataka.gov.in/elevate",
+    "tags": ["startup", "grant", "karnataka"]
+  },
+  {
+    "title": "Kayaka Scheme (SHG Support)",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Empowering women SHGs to start productive enterprises.",
+    "eligibility": { "gender": ["female"], "occupations": ["self_employed"] },
+    "benefits": "Zero-interest loans up to ₹5 lakh for SHGs.",
+    "applyLink": "https://rdpr.karnataka.gov.in/",
+    "tags": ["shg", "women", "zero interest"]
+  },
+  {
+    "title": "Rural Artisan Direct Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Financial assistance for rural artisans to start small workshops.",
+    "eligibility": { "occupations": ["self_employed"], "residence": "rural" },
+    "benefits": "Loan of ₹50,000 for purchase of tools and raw materials.",
+    "applyLink": "https://bcwd.karnataka.gov.in/",
+    "tags": ["rural", "artisan", "workshop"]
+  },
+  {
+    "title": "Karnataka Leather Industries (LIDKAR) Support",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Assisting footwear and leather goods makers in the state.",
+    "eligibility": { "occupations": ["self_employed", "daily_wage"], "castes": ["sc"] },
+    "benefits": "Modern machinery and branding support for leather products.",
+    "applyLink": "https://lidkar.com/",
+    "tags": ["leather", "sc", "livelihood"]
+  }
+]

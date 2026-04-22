@@ -1,0 +1,302 @@
+[
+  {
+    "title": "National Means-cum-Merit Scholarship (NMMSS)",
+    "state": "Central",
+    "category": "Education",
+    "description": "Scholarship for meritorious students of economically weaker sections to prevent dropouts at class 8.",
+    "eligibility": { "occupations": ["student"], "ageMax": 18, "incomeMax": 350000 },
+    "benefits": "₹12,000 per annum from class 9 to 12.",
+    "applyLink": "https://scholarships.gov.in/",
+    "tags": ["scholarship", "merit", "ews"]
+  },
+  {
+    "title": "PM-USP (Scholarship for College Students)",
+    "state": "Central",
+    "category": "Education",
+    "description": "Financial assistance to meritorious students from low-income families for higher studies.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 450000 },
+    "benefits": "₹12,000/year for graduation and ₹20,000/year for post-graduation.",
+    "applyLink": "https://scholarships.gov.in/",
+    "tags": ["higher education", "scholarship"]
+  },
+  {
+    "title": "PM-Vidyalaxmi",
+    "state": "Central",
+    "category": "Education",
+    "description": "Collateral-free and guarantor-free education loans for meritorious students in top institutions.",
+    "eligibility": { "occupations": ["student"] },
+    "benefits": "Loans up to ₹10 lakh with interest subvention.",
+    "applyLink": "https://www.vidyalakshmi.co.in/",
+    "tags": ["loan", "education", "merit"]
+  },
+  {
+    "title": "Central Sector Interest Subsidy (CSIS)",
+    "state": "Central",
+    "category": "Education",
+    "description": "Interest subsidy on education loans for technical and professional courses.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 450000 },
+    "benefits": "Full interest subsidy during the moratorium period on loans.",
+    "applyLink": "https://canarabank.com/csis",
+    "tags": ["loan", "interest subsidy", "technical"]
+  },
+  {
+    "title": "PM-YASASVI Scholarship",
+    "state": "Central",
+    "category": "Education",
+    "description": "Scholarship for students belonging to OBC, EBC, and DNT categories.",
+    "eligibility": { "occupations": ["student"], "castes": ["obc"], "incomeMax": 250000 },
+    "benefits": "₹75,000 to ₹1,25,000 per annum for schools and colleges.",
+    "applyLink": "https://yet.nta.ac.in/",
+    "tags": ["scholarship", "obc", "yasasvi"]
+  },
+  {
+    "title": "National Apprenticeship Promotion Scheme (NAPS)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Promoting apprenticeship training and increasing engagement of apprentices.",
+    "eligibility": { "occupations": ["student", "unemployed"], "ageMin": 14 },
+    "benefits": "Stipend support and reimbursement to industries.",
+    "applyLink": "https://www.apprenticeshipindia.gov.in/",
+    "tags": ["apprenticeship", "stipend", "skills"]
+  },
+  {
+    "title": "Sukanya Samriddhi Yojana",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Savings scheme for the girl child to meet education and marriage expenses.",
+    "eligibility": { "gender": ["female"], "ageMax": 10 },
+    "benefits": "High interest rate savings and tax benefits.",
+    "applyLink": "https://www.indiapost.gov.in/",
+    "tags": ["savings", "girl child", "education"]
+  },
+  {
+    "title": "PM CARES for Children",
+    "state": "Central",
+    "category": "Social Welfare",
+    "description": "Support for children who lost both parents to COVID-19.",
+    "eligibility": { "occupations": ["student"], "ageMax": 23 },
+    "benefits": "Monthly stipend, ₹10 lakh corpus at age 23, and education support.",
+    "applyLink": "https://pmcaresforchildren.in/",
+    "tags": ["covid-19", "orphan", "support"]
+  },
+  {
+    "title": "Pragati Scholarship for Girls",
+    "state": "Central",
+    "category": "Education",
+    "description": "Assisting girls to pursue technical education (Degree/Diploma).",
+    "eligibility": { "gender": ["female"], "occupations": ["student"], "incomeMax": 800000 },
+    "benefits": "₹50,000 per annum for duration of study.",
+    "applyLink": "https://www.aicte-india.org/",
+    "tags": ["technical", "girls", "scholarship"]
+  },
+  {
+    "title": "Saksham Scholarship",
+    "state": "Central",
+    "category": "Education",
+    "description": "Technical education support for specially-abled students.",
+    "eligibility": { "occupations": ["student"], "isDisabilityRequired": true },
+    "benefits": "₹50,000 per annum for technical studies.",
+    "applyLink": "https://www.aicte-india.org/",
+    "tags": ["disabled", "technical", "scholarship"]
+  },
+  {
+    "title": "National Overseas Scholarship",
+    "state": "Central",
+    "category": "Education",
+    "description": "Support for students from SC and landless agricultural laborer families to study abroad.",
+    "eligibility": { "occupations": ["student"], "castes": ["sc"], "incomeMax": 800000 },
+    "benefits": "Full tuition fees and maintenance allowance for study abroad.",
+    "applyLink": "http://nosmsje.gov.in/",
+    "tags": ["study abroad", "sc", "scholarship"]
+  },
+  {
+    "title": "INSPIRE Scholarship",
+    "state": "Central",
+    "category": "Education",
+    "description": "Scholarship for top science students to pursue higher science education.",
+    "eligibility": { "occupations": ["student"] },
+    "benefits": "₹80,000 per year for students of basic sciences.",
+    "applyLink": "https://online-inspire.gov.in/",
+    "tags": ["science", "merit", "dst"]
+  },
+  {
+    "title": "Post-Matric Scholarship for Minorities",
+    "state": "Central",
+    "category": "Education",
+    "description": "Financial support for students from minority communities for studies beyond class 10.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 200000 },
+    "benefits": "Admission/Tuition fee and maintenance allowance.",
+    "applyLink": "https://scholarships.gov.in/",
+    "tags": ["minority", "scholarship", "post-matric"]
+  },
+  {
+    "title": "Kishore Vaigyanik Protsahan Yojana (KVPY)",
+    "state": "Central",
+    "category": "Education",
+    "description": "Fellowship program to encourage students to take up research in basic sciences.",
+    "eligibility": { "occupations": ["student"] },
+    "benefits": "Generous fellowship and contingency grant up to PhD level.",
+    "applyLink": "http://kvpy.iisc.ernet.in/",
+    "tags": ["research", "science", "fellowship"]
+  },
+  {
+    "title": "Junior Research Fellowship (NET-JRF)",
+    "state": "Central",
+    "category": "Education",
+    "description": "Financial assistance to candidates for pursuing research in various subjects.",
+    "eligibility": { "occupations": ["student"], "ageMax": 30 },
+    "benefits": "Stipend of ₹37,000+ per month for research.",
+    "applyLink": "https://ugcnet.nta.nic.in/",
+    "tags": ["research", "phd", "ugc"]
+  },
+  {
+    "title": "SSP Post-Matric Scholarship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Comprehensive scholarship portal for SC/ST/OBC/Minority students.",
+    "eligibility": { "occupations": ["student"], "castes": ["sc", "st", "obc", "general"] },
+    "benefits": "Tuition fee reimbursement and monthly stipend.",
+    "applyLink": "https://ssp.postmatric.karnataka.gov.in/",
+    "tags": ["karnataka", "scholarship", "fees"]
+  },
+  {
+    "title": "Vidyasiri (Food & Accommodation)",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Maintenance allowance for OBC/EBC students who don't get hostel seats.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 200000 },
+    "benefits": "₹15,000 per academic year for food and stay.",
+    "applyLink": "https://bcwd.karnataka.gov.in/",
+    "tags": ["hostel", "stay", "obc"]
+  },
+  {
+    "title": "Arivu Education Loan Scheme",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Low-interest education loans for minority students pursuing professional courses.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 250000 },
+    "benefits": "Loans up to ₹50,000 to ₹1,00,000 at 2% interest per annum.",
+    "applyLink": "https://kmdc.karnataka.gov.in/",
+    "tags": ["loan", "low interest", "minority"]
+  },
+  {
+    "title": "Prabuddha Overseas Scholarship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Scholarship for SC/ST students to study in top global universities.",
+    "eligibility": { "occupations": ["student"], "castes": ["sc", "st"] },
+    "benefits": "Full scholarship covering tuition, living, and travel costs.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["overseas", "sc", "st", "study abroad"]
+  },
+  {
+    "title": "Free Laptops for SC/ST Students",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Free laptop distribution for college students from SC/ST communities.",
+    "eligibility": { "occupations": ["student"], "castes": ["sc", "st"] },
+    "benefits": "Zero-cost laptop for undergraduate and postgraduate studies.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["laptop", "gadgets", "sc", "st"]
+  },
+  {
+    "title": "Incentive for SSLC & 2nd PUC (Minority)",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Cash prize for high scorers in board exams from minority communities.",
+    "eligibility": { "occupations": ["student"] },
+    "benefits": "Cash prize of ₹10,000 to ₹20,000 for high percentage scorers.",
+    "applyLink": "https://dom.karnataka.gov.in/",
+    "tags": ["cash prize", "merit", "minority"]
+  },
+  {
+    "title": "PhD Fellowship (Social Welfare Board)",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Monthly fellowship for PhD students from backward classes.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 150000 },
+    "benefits": "₹10,000 per month for research work.",
+    "applyLink": "https://bcwd.karnataka.gov.in/",
+    "tags": ["phd", "research", "fellowship"]
+  },
+  {
+    "title": "SSP Pre-Matric Scholarship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Scholarship for students from class 1 to 10.",
+    "eligibility": { "occupations": ["student"], "ageMax": 16 },
+    "benefits": "Maintenance and book grant for school students.",
+    "applyLink": "https://ssp.karnataka.gov.in/",
+    "tags": ["school", "scholarship", "karnataka"]
+  },
+  {
+    "title": "Chief Minister’s Kaushalya Karnataka (CMKKY)",
+    "state": "Karnataka",
+    "category": "Skill Development",
+    "description": "Skill training for youth to improve employability.",
+    "eligibility": { "occupations": ["student", "unemployed"], "ageMin": 18, "ageMax": 35 },
+    "benefits": "Free skill training and certification in various trades.",
+    "applyLink": "https://www.kaushalkar.com/",
+    "tags": ["skills", "vocational", "training"]
+  },
+  {
+    "title": "Kittur Rani Chennamma Award",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Incentive for girl students who excel in PU exams and belong to poor families.",
+    "eligibility": { "gender": ["female"], "occupations": ["student"], "incomeMax": 200000 },
+    "benefits": "Cash award and certificate of excellence.",
+    "applyLink": "https://pue.karnataka.gov.in/",
+    "tags": ["girls", "merit", "puc"]
+  },
+  {
+    "title": "Samriddhi Scheme (SC/ST Startups)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Support for SC/ST students to become entrepreneurs through franchise models.",
+    "eligibility": { "occupations": ["student", "unemployed"], "castes": ["sc", "st"] },
+    "benefits": "Grant of up to ₹10 lakh to start a business or franchise.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["entrepreneur", "sc", "st", "startup"]
+  },
+  {
+    "title": "Free Cycle Scheme",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Distribution of free cycles to school students in rural areas.",
+    "eligibility": { "occupations": ["student"], "residence": "rural" },
+    "benefits": "Free bicycle for commuting to school.",
+    "applyLink": "https://schooleducation.kar.nic.in/",
+    "tags": ["cycle", "rural", "transport"]
+  },
+  {
+    "title": "D. Devaraj Urs Foreign Education Scholarship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Overseas scholarship for students from backward classes.",
+    "eligibility": { "occupations": ["student"], "incomeMax": 350000 },
+    "benefits": "Up to ₹10 lakh for overseas post-graduate studies.",
+    "applyLink": "https://bcwd.karnataka.gov.in/",
+    "tags": ["obc", "overseas", "higher studies"]
+  },
+  {
+    "title": "Adarsha Vidyalaya Entrance Fellowship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Special support for students admitted to Adarsha Vidyalayas (English Medium schools).",
+    "eligibility": { "occupations": ["student"], "ageMax": 12 },
+    "benefits": "Quality education and support material for rural students.",
+    "applyLink": "https://adarsha.karnataka.gov.in/",
+    "tags": ["school", "merit", "english medium"]
+  },
+  {
+    "title": "Vidyasiri Rural Hostel maintenance",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Special maintenance for students in rural hosteling facilities.",
+    "eligibility": { "occupations": ["student"], "residence": "rural" },
+    "benefits": "Increased maintenance allowance and quality food.",
+    "applyLink": "https://bcwd.karnataka.gov.in/",
+    "tags": ["hostel", "rural", "food"]
+  }
+]

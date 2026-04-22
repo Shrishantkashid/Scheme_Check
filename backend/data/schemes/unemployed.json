@@ -1,0 +1,302 @@
+[
+  {
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Offering short-term training and certification of prior learning for unemployed youth.",
+    "eligibility": { "occupations": ["unemployed", "student"], "ageMin": 18, "ageMax": 45 },
+    "benefits": "Free skill training, certification, and reward for successful candidates.",
+    "applyLink": "https://www.pmkvyofficial.org/",
+    "tags": ["skill training", "certification", "youth"]
+  },
+  {
+    "title": "Prime Minister’s Employment Generation Programme (PMEGP)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Financial assistance to set up micro-enterprises in non-farm sectors.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"], "ageMin": 18 },
+    "benefits": "Bank-connected subsidy of 15% to 35% on project cost.",
+    "applyLink": "https://www.kviconline.gov.in/",
+    "tags": ["subsidy", "startup", "micro-enterprise"]
+  },
+  {
+    "title": "National Career Service (NCS) Portal",
+    "state": "Central",
+    "category": "Employment",
+    "description": "ICT-based portal that provides a wide range of employment-related services.",
+    "eligibility": { "occupations": ["unemployed", "student"] },
+    "benefits": "Job matching, career counseling, and vocational guidance.",
+    "applyLink": "https://www.ncs.gov.in/",
+    "tags": ["job matching", "career counseling", "portal"]
+  },
+  {
+    "title": "ASEEM (Aatmanirbhar Skilled Employee Employer Mapping)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "AI-based platform to match skilled people with available jobs.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"] },
+    "benefits": "Direct access to job opportunities based on skill sets.",
+    "applyLink": "https://smis.nsdcindia.org/",
+    "tags": ["job match", "skilled labor", "ai"]
+  },
+  {
+    "title": "DDU-GKY (Deen Dayal Upadhyaya Grameen Kaushalya Yojana)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Skill training and placement program exclusively for rural youth.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"], "residence": "rural", "ageMin": 15, "ageMax": 35 },
+    "benefits": "Free training, uniform, books, and guaranteed placement support.",
+    "applyLink": "https://ddugky.gov.in/",
+    "tags": ["rural", "training", "placement"]
+  },
+  {
+    "title": "PM-DAKSH Yojana",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Skill development for Scheduled Castes, Backward Classes, and Safai Karamcharis.",
+    "eligibility": { "occupations": ["unemployed"], "castes": ["sc", "obc"] },
+    "benefits": "Upskilling, short-term and long-term training with stipend.",
+    "applyLink": "https://pmdaksh.dosje.gov.in/",
+    "tags": ["sc", "obc", "skilling"]
+  },
+  {
+    "title": "STRIVE (Skills Strengthening for Industrial Value Enhancement)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Improving the relevance and efficiency of ITIs in India.",
+    "eligibility": { "occupations": ["student", "unemployed"] },
+    "benefits": "Upgraded training facilities and better industry linkages.",
+    "applyLink": "https://dgt.gov.in/strive",
+    "tags": ["iti", "industrial", "training"]
+  },
+  {
+    "title": "SANKALP Scheme",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Strengthening institutional mechanisms for skill development at district and state levels.",
+    "eligibility": { "occupations": ["unemployed", "student"] },
+    "benefits": "Better access to decentralized skill training programs.",
+    "applyLink": "https://sankalp.msde.gov.in/",
+    "tags": ["skilling", "district level", "policy"]
+  },
+  {
+    "title": "National Apprenticeship Promotion Scheme (NAPS)",
+    "state": "Central",
+    "category": "Employment",
+    "description": "Promoting apprenticeship training and increasing engagement of apprentices.",
+    "eligibility": { "occupations": ["unemployed", "student"], "ageMin": 14 },
+    "benefits": "Sharing of 25% of prescribed stipend subject to a max of ₹1,500/month.",
+    "applyLink": "https://www.apprenticeshipindia.gov.in/",
+    "tags": ["apprenticeship", "stipend", "experience"]
+  },
+  {
+    "title": "Jan Shikshan Sansthan (JSS)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Vocational training for non-literates, neo-literates, and school dropouts in rural/urban slums.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"] },
+    "benefits": "Skill training in local trades to improve self-reliance.",
+    "applyLink": "https://jss.gov.in/",
+    "tags": ["vocational", "non-literates", "slum"]
+  },
+  {
+    "title": "PM Kaushal Kendra (PMKK)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "State-of-the-art Model Training Centres (MTCs) in every district.",
+    "eligibility": { "occupations": ["unemployed", "student"] },
+    "benefits": "High-quality vocational training with standardized equipment.",
+    "applyLink": "https://www.nsdcindia.org/pmkk",
+    "tags": ["training centre", "skills", "quality"]
+  },
+  {
+    "title": "National SC-ST Hub (NSSH)",
+    "state": "Central",
+    "category": "Support",
+    "description": "Building an ecosystem to support SC/ST entrepreneurs.",
+    "eligibility": { "occupations": ["self_employed", "unemployed"], "castes": ["sc", "st"] },
+    "benefits": "Professional support and handholding for participating in public procurement.",
+    "applyLink": "https://www.scsthub.in/",
+    "tags": ["sc", "st", "entrepreneur"]
+  },
+  {
+    "title": "SAMRATH (Textile Skill Development)",
+    "state": "Central",
+    "category": "Skill Development",
+    "description": "Skill development program in the textile sector.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"] },
+    "benefits": "Assistance for skill development in spinning, weaving, and garmenting.",
+    "applyLink": "https://samrath-texmin.gov.in/",
+    "tags": ["textile", "skilling", "jobs"]
+  },
+  {
+    "title": "Self-Employment Lending (OBC/EBC)",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Credit for starting small businesses for Backward Classes.",
+    "eligibility": { "castes": ["obc"], "incomeMax": 300000 },
+    "benefits": "Low-interest loans up to ₹5 lakh for self-employment.",
+    "applyLink": "https://nbcfdc.gov.in/",
+    "tags": ["obc", "loan", "startup"]
+  },
+  {
+    "title": "Credit Guarantee for Micro Units (CGFMU)",
+    "state": "Central",
+    "category": "Finance",
+    "description": "Guarantee for loans extended under MUDRAn Yojana.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"] },
+    "benefits": "Ensures bank confidence in lending to first-time entrepreneurs.",
+    "applyLink": "https://www.ncfmcs.org.in/",
+    "tags": ["mudra", "guarantee", "loan"]
+  },
+  {
+    "title": "Yuva Nidhi Scheme",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Monthly allowance for unemployed graduates and diploma holders of the state.",
+    "eligibility": { "occupations": ["unemployed"], "ageMax": 30 },
+    "benefits": "₹3,000 (Degree) or ₹1,500 (Diploma) per month for up to 24 months.",
+    "applyLink": "https://sevasindhu.karnataka.gov.in/",
+    "tags": ["unemployment allowance", "graduates", "karnataka"]
+  },
+  {
+    "title": "Chief Minister’s Kaushalya Karnataka (CMKKY)",
+    "state": "Karnataka",
+    "category": "Skill Development",
+    "description": "Flagship vocational training scheme of Karnataka Govt.",
+    "eligibility": { "occupations": ["unemployed", "student"], "ageMin": 18, "ageMax": 35 },
+    "benefits": "Free certification and training in hundreds of job roles.",
+    "applyLink": "https://www.kaushalkar.com/",
+    "tags": ["skill karnataka", "training", "free"]
+  },
+  {
+    "title": "CMEGP (Self-Employment Generation)",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "Loan-cum-subsidy for unemployed youth to start small industries.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"], "ageMin": 18, "ageMax": 45 },
+    "benefits": "Subsidy ranging from 25% to 35% on projects up to ₹25 lakh.",
+    "applyLink": "https://cmegp.kar.nic.in/",
+    "tags": ["startup", "subsidy", "indusrty"]
+  },
+  {
+    "title": "Dr. Ambedkar Swavalambana Yojana",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Individual self-employment loans for SC community members.",
+    "eligibility": { "castes": ["sc"], "occupations": ["unemployed", "self_employed"] },
+    "benefits": "Small loans with 50% subsidy for income-generating activities.",
+    "applyLink": "https://adcl.karnataka.gov.in/",
+    "tags": ["sc", "self-reliance", "loan"]
+  },
+  {
+    "title": "Samriddhi (Franchise-based Entrepreneurship)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Supporting SC/ST youth to become business owners via franchises.",
+    "eligibility": { "castes": ["sc", "st"], "occupations": ["unemployed"] },
+    "benefits": "Grant of up to ₹10 lakh to set up franchise of reputed brands.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["franchise", "sc", "st", "business"]
+  },
+  {
+    "title": "KSTDC Tourist Taxi Scheme",
+    "state": "Karnataka",
+    "category": "Transport",
+    "description": "Empowering unemployed youth by helping them buy tourist taxis.",
+    "eligibility": { "occupations": ["unemployed"], "ageMin": 18 },
+    "benefits": "Subsidy of ₹3 lakh for purchase of car or taxi.",
+    "applyLink": "https://kstdc.nic.in/",
+    "tags": ["taxi", "tourism", "subsidy"]
+  },
+  {
+    "title": "Devaraj Urs Development Corporation Startup Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Start-up capital for Backward Classes (OBC) youth.",
+    "eligibility": { "castes": ["obc"], "occupations": ["unemployed"] },
+    "benefits": "Loan of ₹1-2 lakh with back-end subsidy.",
+    "applyLink": "https://dbcdc.karnataka.gov.in/",
+    "tags": ["obc", "startup", "loan"]
+  },
+  {
+    "title": "Kayaka (SHG Enterprise Support)",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Supporting SHG members to migrate from wage labor to small units.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"] },
+    "benefits": "Zero-interest loans up to ₹5 lakh for SHG federations.",
+    "applyLink": "https://rdpr.karnataka.gov.in/",
+    "tags": ["shg", "enterprise", "zero interest"]
+  },
+  {
+    "title": "Badavara Bandhu (Zero Interest Loan for Start)",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Small interest-free capital for starting micro-vending trades.",
+    "eligibility": { "occupations": ["unemployed", "daily_wage"] },
+    "benefits": "Interest-free daily/weekly loans for small traders.",
+    "applyLink": "https://cooperation.karnataka.gov.in/",
+    "tags": ["vending", "interest-free", "capital"]
+  },
+  {
+    "title": "Minority Development Corporation Self-Employment Scheme",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Loan and subsidy for minority youth for diverse businesses.",
+    "eligibility": { "occupations": ["unemployed"], "incomeMax": 200000 },
+    "benefits": "Loan of ₹2 lakh with 50% subsidy components.",
+    "applyLink": "https://kmdc.karnataka.gov.in/",
+    "tags": ["minority", "loan", "startup"]
+  },
+  {
+    "title": "Ambedkar Self Employment for Physically Challenged",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Tailored loans for differently-abled individuals to start shops.",
+    "eligibility": { "isDisabilityRequired": true, "occupations": ["unemployed"] },
+    "benefits": "Loan with 50% subsidy and low-interest rates.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["disabled", "special needs", "loan"]
+  },
+  {
+    "title": "Elevate (Startup Grants for Women/Tier-2)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Grants for startups from small towns or women-led teams.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"] },
+    "benefits": "Grants up to ₹50 lakh for innovation and commercialization.",
+    "applyLink": "https://startup.karnataka.gov.in/",
+    "tags": ["innovation", "grant", "women"]
+  },
+  {
+    "title": "Unnati (Social Innovation Grants)",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Matching grant-in-aid for SC/ST innovators/entrepreneurs.",
+    "eligibility": { "castes": ["sc", "st"], "occupations": ["unemployed"] },
+    "benefits": "Financial support of up to ₹50 lakh for social impact products.",
+    "applyLink": "https://sw.kar.nic.in/",
+    "tags": ["sc", "st", "social impact"]
+  },
+  {
+    "title": "Suvarna Kayaka",
+    "state": "Karnataka",
+    "category": "Employment",
+    "description": "One-time technical training for youth in rural areas.",
+    "eligibility": { "residence": "rural", "occupations": ["unemployed"] },
+    "benefits": "Free technical course and toolkit distribution.",
+    "applyLink": "https://rdpr.karnataka.gov.in/",
+    "tags": ["technical", "rural youth", "training"]
+  },
+  {
+    "title": "Madiwala Development Corporation Loan",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Financial assistance for washing, ironing, and drying trades.",
+    "eligibility": { "occupations": ["unemployed", "self_employed"] },
+    "benefits": "Direct loan with subsidy for laundry equipment.",
+    "applyLink": "https://kmvcdc.karnataka.gov.in/",
+    "tags": ["laundry", "trade", "loan"]
+  }
+]

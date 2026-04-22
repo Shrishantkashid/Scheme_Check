@@ -1,0 +1,302 @@
+[
+  {
+    "title": "PM-Kisan Samman Nidhi",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Financial assistance to all landholding farmer families to take care of agricultural and domestic needs.",
+    "eligibility": { "occupations": ["farmer"], "landSizeMax": 999 },
+    "benefits": "₹6,000 per year in three installments.",
+    "applyLink": "https://pmkisan.gov.in/",
+    "tags": ["income support", "direct benefit", "farmers"]
+  },
+  {
+    "title": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Crop insurance scheme for financial support against crop loss due to natural calamities.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Low premium insurance for all food and oilseed crops.",
+    "applyLink": "https://pmfby.gov.in/",
+    "tags": ["insurance", "crops", "protection"]
+  },
+  {
+    "title": "Kisan Credit Card (KCC)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Providing adequate and timely credit support from the banking system.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Short-term credit for cultivation and maintenance of assets.",
+    "applyLink": "https://www.myscheme.gov.in/",
+    "tags": ["loan", "credit", "banking"]
+  },
+  {
+    "title": "Soil Health Card Scheme",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Provides soil health reports and fertilizer recommendations.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Detailed report on soil nutrients and fertilizer advice.",
+    "applyLink": "https://soilhealth.dac.gov.in/",
+    "tags": ["soil", "agriculture", "testing"]
+  },
+  {
+    "title": "PM Krishi Sinchai Yojana (PMKSY)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Improving water-use efficiency and expanding irrigation coverage.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Subsidies for drip and sprinkler irrigation systems.",
+    "applyLink": "https://pmksy.gov.in/",
+    "tags": ["irrigation", "water", "efficiency"]
+  },
+  {
+    "title": "E-NAM (National Agriculture Market)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Pan-India electronic trading portal for agricultural commodities.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Better price discovery and online trading platform.",
+    "applyLink": "https://www.enam.gov.in/",
+    "tags": ["market", "trading", "prices"]
+  },
+  {
+    "title": "Paramparagat Krishi Vikas Yojana (PKVY)",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Promotion of organic farming and improving soil health.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Support for organic clusters and certification.",
+    "applyLink": "https://dmsouthwest.delhi.gov.in/scheme/paramparagat-krishi-vikas-yojana/",
+    "tags": ["organic", "farming", "sustainable"]
+  },
+  {
+    "title": "PM-KISAN Maandhan Yojana",
+    "state": "Central",
+    "category": "Pension",
+    "description": "Pension scheme for small and marginal farmers.",
+    "eligibility": { "occupations": ["farmer"], "ageMin": 18, "ageMax": 40 },
+    "benefits": "Minimum assured pension of ₹3,000 per month after age 60.",
+    "applyLink": "https://maandhan.in/",
+    "tags": ["pension", "old age", "security"]
+  },
+  {
+    "title": "Agri-Infrastructure Fund",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Financing facility for post-harvest management infrastructure.",
+    "eligibility": { "occupations": ["farmer", "self_employed"] },
+    "benefits": "Interest subvention and credit guarantee for infra projects.",
+    "applyLink": "https://agriinfra.dac.gov.in/",
+    "tags": ["infrastructure", "cold storage", "loans"]
+  },
+  {
+    "title": "PM Matsya Sampada Yojana",
+    "state": "Central",
+    "category": "Fisheries",
+    "description": "Focused development of the fisheries sector.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Support for fish production and infrastructure.",
+    "applyLink": "https://pmmsy.dof.gov.in/",
+    "tags": ["fisheries", "aquaculture", "income"]
+  },
+  {
+    "title": "PM-AASHA",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Ensuring remunerative prices to farmers for their produce.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Price support and deficiency payment for pulses/oilseeds.",
+    "applyLink": "https://pib.gov.in/",
+    "tags": ["price support", "msp", "pulses"]
+  },
+  {
+    "title": "National Food Security Mission",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Increasing production of rice, wheat, and pulses through area expansion.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Subsidies on seeds, technology, and machinery.",
+    "applyLink": "https://nfsm.gov.in/",
+    "tags": ["seeds", "productivity", "food security"]
+  },
+  {
+    "title": "Micro Irrigation Fund",
+    "state": "Central",
+    "category": "Agriculture",
+    "description": "Facilitating states in mobilizing resources for expanding micro-irrigation.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Low-interest loans for micro-irrigation hardware.",
+    "applyLink": "https://nabard.org/",
+    "tags": ["irrigation", "nabard", "loans"]
+  },
+  {
+    "title": "Mission for Integrated Development of Horticulture",
+    "state": "Central",
+    "category": "Horticulture",
+    "description": "Holistic growth of the horticulture sector.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Technical support and subsidies for fruit/vegetable farming.",
+    "applyLink": "https://midh.gov.in/",
+    "tags": ["fruits", "vegetables", "horticulture"]
+  },
+  {
+    "title": "Kisan Urja Suraksha evam Utthaan Mahabhiyan (PM-KUSUM)",
+    "state": "Central",
+    "category": "Energy",
+    "description": "Helping farmers install solar pumps and grid-connected solar plants.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Renewable energy and additional income from solar power.",
+    "applyLink": "https://pmkusum.mnre.gov.in/",
+    "tags": ["solar", "energy", "irrigation"]
+  },
+  {
+    "title": "Raitha Vidyanidhi Scholarship",
+    "state": "Karnataka",
+    "category": "Education",
+    "description": "Scholarship for children of farmers to pursue higher education.",
+    "eligibility": { "occupations": ["farmer"], "ageMax": 24 },
+    "benefits": "Annual scholarship of ₹2,000 to ₹11,000.",
+    "applyLink": "https://ssp.postmatric.karnataka.gov.in/",
+    "tags": ["scholarship", "education", "karnataka"]
+  },
+  {
+    "title": "Krishi Bhagya",
+    "state": "Karnataka",
+    "category": "Agriculture",
+    "description": "Livelihood improvement of rainfed farmers.",
+    "eligibility": { "occupations": ["farmer"], "residence": "rural" },
+    "benefits": "Subsidy for farm ponds, lining, and sprinklers.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["water", "pond", "rainfed"]
+  },
+  {
+    "title": "Pashu Bhagya",
+    "state": "Karnataka",
+    "category": "Animal Husbandry",
+    "description": "Assistance for purchasing quality livestock.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Back-end subsidy and interest-free loans for cattle/sheep.",
+    "applyLink": "https://ahvs.karnataka.gov.in/",
+    "tags": ["livestock", "dairy", "loan"]
+  },
+  {
+    "title": "Milk Incentive Scheme",
+    "state": "Karnataka",
+    "category": "Animal Husbandry",
+    "description": "Incentive for milk producers through co-operative societies.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "₹5 per litre incentive directly to milk producers.",
+    "applyLink": "https://www.kmfnandini.coop/",
+    "tags": ["milk", "incentive", "dairy"]
+  },
+  {
+    "title": "Ganga Kalyana Scheme",
+    "state": "Karnataka",
+    "category": "Irrigation",
+    "description": "Free borewells for small/marginal farmers from backward classes.",
+    "eligibility": { "occupations": ["farmer"], "castes": ["sc", "st", "obc"] },
+    "benefits": "Free borewell drilling and pump installation.",
+    "applyLink": "https://adcl.karnataka.gov.in/",
+    "tags": ["borewell", "water", "irrigation"]
+  },
+  {
+    "title": "Raitha Siri",
+    "state": "Karnataka",
+    "category": "Agriculture",
+    "description": "Encouraging millet cultivation among state farmers.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Incentive of ₹10,000 per hectare for millet growers.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["millets", "incentive", "siridhanya"]
+  },
+  {
+    "title": "Krushi Aranya Protsaha Yojane",
+    "state": "Karnataka",
+    "category": "Forestry",
+    "description": "Assistance for planting seedlings on farm bunds.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "₹100 to ₹125 incentive per tree surviving for 3 years.",
+    "applyLink": "https://forest.karnataka.gov.in/",
+    "tags": ["trees", "environment", "incentive"]
+  },
+  {
+    "title": "Surya Raitha",
+    "state": "Karnataka",
+    "category": "Energy",
+    "description": "Solar pumpsets for farmers with surplus power sales.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Installation of 10HP solar pumps with grid connection.",
+    "applyLink": "https://bescom.karnataka.gov.in/",
+    "tags": ["solar", "pumps", "energy"]
+  },
+  {
+    "title": "Raitha Sanjeevini (Accident Insurance)",
+    "state": "Karnataka",
+    "category": "Insurance",
+    "description": "Ex-gratia payment to farmers in case of accidental death during farm work.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Compensation up to ₹2 lakh for the family.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["insurance", "accident", "compensation"]
+  },
+  {
+    "title": "Krishi Yantra Dhare",
+    "state": "Karnataka",
+    "category": "Agriculture",
+    "description": "Custom hiring centers for farm machinery.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Access to expensive machinery at low rental prices.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["machinery", "tractor", "rental"]
+  },
+  {
+    "title": "Savayava Bhagya",
+    "state": "Karnataka",
+    "category": "Agriculture",
+    "description": "Promotion of organic farming through cluster development.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Training and subsidies for organic inputs.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["organic", "manure", "training"]
+  },
+  {
+    "title": "Krishi Navodyama",
+    "state": "Karnataka",
+    "category": "Startup",
+    "description": "Promoting agri-startups and innovation in the state.",
+    "eligibility": { "occupations": ["farmer", "self_employed"] },
+    "benefits": "Grants and incubation support for agri-tech startups.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["startups", "agritech", "innovation"]
+  },
+  {
+    "title": "Bhoo Chetana",
+    "state": "Karnataka",
+    "category": "Agriculture",
+    "description": "Soil health enhancement through nutrient management.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Distribution of micro-nutrients and soil testing.",
+    "applyLink": "https://raitamitra.karnataka.gov.in/",
+    "tags": ["soil health", "nutrients"]
+  },
+  {
+    "title": "Suvarna Gramodaya",
+    "state": "Karnataka",
+    "category": "Rural Development",
+    "description": "Holistic development of selected villages.",
+    "eligibility": { "occupations": ["farmer", "daily_wage"], "residence": "rural" },
+    "benefits": "Infrastructure and livelihood support in rural clusters.",
+    "applyLink": "https://rdpr.karnataka.gov.in/",
+    "tags": ["village", "rural", "infrastructure"]
+  },
+  {
+    "title": "Karnataka State Agriculture Marketing Board Loans",
+    "state": "Karnataka",
+    "category": "Finance",
+    "description": "Pledge loans against agricultural produce.",
+    "eligibility": { "occupations": ["farmer"] },
+    "benefits": "Advance against stored produce to avoid distress sale.",
+    "applyLink": "https://ksamb.karnataka.gov.in/",
+    "tags": ["loan", "warehouse", "marketing"]
+  }
+]
