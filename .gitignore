@@ -41,3 +41,15 @@ app-example
 # generated native folders
 /ios
 /android
+# env files (important)
+.env
+backend/.env
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
