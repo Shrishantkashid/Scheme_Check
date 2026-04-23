@@ -6,15 +6,13 @@ import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
+import { API_URL } from '@/constants/config';
 import { Colors } from '@/constants/theme';
-
-const API_URL = "http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api";
 
 import { useAuth } from '@/context/auth';
 
@@ -32,21 +30,33 @@ export default function LoginScreen() {
 
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
+      console.log("Attempting sign in...");
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
-      const { token, user } = response.data;
+      const data = await res.json();
       
-      // Use signIn from AuthContext
-      await signIn(token, user);
+      if (res.ok) {
+        const { token, user } = data;
+        // Use signIn from AuthContext
+        await signIn(token, user);
+      } else {
+        const message = data.message || 'Invalid credentials or server error.';
+        Alert.alert('Sign In Failed', message);
+      }
       
       // router.replace is handled by AuthContext useEffect
     } catch (error: any) {
       console.error('Login error:', error);
-      const message = error.response?.data?.message || 'Invalid credentials or server error.';
-      Alert.alert('Sign In Failed', message);
+      Alert.alert('Sign In Failed', 'Network error. Please try again.');
     } finally {
       setIsLoading(false);
     }

@@ -3,7 +3,6 @@ import { StyleSheet, View, TouchableOpacity, TextInput, ScrollView, ActivityIndi
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft, Layout } from 'react-native-reanimated';
-import axios from 'axios';
 
 import { ThemedText } from '@/components/themed-text';
 import { Colors } from '@/constants/theme';
@@ -59,15 +58,22 @@ export function QuestionEngine({ onComplete, mode, voiceTrigger, onQuestionChang
     try {
       const isFinal = !nextId || ONBOARDING_QUESTIONS[currentId]?.isFinal;
       
-      const response = await axios.put(
-        `${API_URL}/user/profile`,
-        {
+      const res = await fetch(`${API_URL}/user/profile`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
           profile: { [currentId]: value },
           lastQuestionId: isFinal ? null : nextId,
           isOnboarded: isFinal ? true : undefined
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to save progress');
+      }
 
       // Update local auth context
       updateUser({

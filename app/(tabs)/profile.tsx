@@ -5,7 +5,6 @@ import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { router } from 'expo-router';
-import axios from 'axios';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -34,17 +33,26 @@ export default function ProfileScreen() {
 
   const handleUpdateInfo = async () => {
     try {
-      const response = await axios.put(
-        `${API_URL}/user/update-info`,
-        editValues,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      updateUser(response.data.user);
-      setIsEditing(false);
-      Alert.alert('Success', 'Profile updated successfully');
-    } catch (error) {
+      const res = await fetch(`${API_URL}/user/update-info`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editValues)
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        updateUser(data.user);
+        setIsEditing(false);
+        Alert.alert('Success', 'Profile updated successfully');
+      } else {
+        throw new Error(data.message || 'Failed to update profile');
+      }
+    } catch (error: any) {
       console.error(error);
-      Alert.alert('Error', 'Failed to update profile');
+      Alert.alert('Error', error.message || 'Failed to update profile');
     }
   };
 
@@ -61,17 +69,25 @@ export default function ProfileScreen() {
             setIsReseting(true);
             try {
               // We just set isOnboarded to false but keep profile data
-              await axios.put(
-                `${API_URL}/user/profile`,
-                { isOnboarded: false },
-                { headers: { Authorization: `Bearer ${token}` } }
-              );
-              updateUser({ isOnboarded: false });
+              const res = await fetch(`${API_URL}/user/profile`, {
+                method: "PUT",
+                headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ isOnboarded: false })
+              });
               
-              // Small delay for AuthContext state propagation
-              setTimeout(() => {
-                router.replace('/onboarding/manual');
-              }, 100);
+              if (res.ok) {
+                updateUser({ isOnboarded: false });
+                
+                // Small delay for AuthContext state propagation
+                setTimeout(() => {
+                  router.replace('/onboarding/manual');
+                }, 100);
+              } else {
+                throw new Error('Failed to update status');
+              }
             } catch (err) {
               Alert.alert('Error', 'Failed to update status');
             } finally {
@@ -86,26 +102,32 @@ export default function ProfileScreen() {
             setIsReseting(true);
             try {
               // We use the stabilized PUT profile route with a reset flag
-              // This bypasses the 404 issue since PUT /user/profile is a confirmed working route.
-              await axios.put(
-                `${API_URL}/user/profile`,
-                { reset: true },
-                { headers: { Authorization: `Bearer ${token}` } }
-              );
-              
-              // CRITICAL: Wipe local state BEFORE redirecting
-              updateUser({ 
-                isOnboarded: false, 
-                lastQuestionId: null, 
-                profile: {} 
+              const res = await fetch(`${API_URL}/user/profile`, {
+                method: "PUT",
+                headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ reset: true })
               });
               
-              // Small delay for AuthContext state propagation
-              setTimeout(() => {
-                router.replace('/onboarding');
-              }, 100);
+              if (res.ok) {
+                // CRITICAL: Wipe local state BEFORE redirecting
+                updateUser({ 
+                  isOnboarded: false, 
+                  lastQuestionId: null, 
+                  profile: {} 
+                });
+                
+                // Small delay for AuthContext state propagation
+                setTimeout(() => {
+                  router.replace('/onboarding');
+                }, 100);
+              } else {
+                throw new Error('Failed to perform a fresh reset');
+              }
             } catch (error: any) {
-              console.error('Reset Error Details:', error?.response?.data || error.message);
+              console.error('Reset Error Details:', error.message);
               Alert.alert('Error', 'Failed to perform a fresh reset. Please check your connection.');
             } finally {
               setIsReseting(false);

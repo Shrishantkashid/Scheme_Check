@@ -7,10 +7,6 @@ import { Platform } from 'react-native';
 
 // Use EXPO_PUBLIC_ prefix for environment variables to be accessible in the app
 // Production URL should be set in EAS secrets or a .env file
-const PRODUCTION_API_URL = process.env.EXPO_PUBLIC_API_URL;
+const EXPO_PUBLIC_API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export const API_URL = PRODUCTION_API_URL || (Platform.OS === 'android' 
-  ? 'http://10.219.114.164:5000/api' // Use local IP for Android dev
-  : 'http://localhost:5000/api');     // Localhost works for iOS Simulator
-
-
+export const API_URL = EXPO_PUBLIC_API_URL || 'http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api';

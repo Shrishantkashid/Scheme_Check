@@ -82,25 +82,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(newToken);
     
     try {
-      // 2. Fetch DEFINITIVE user state from backend to ensure we have all fields (isOnboarded, profile, etc.)
+      console.log("Fetching user with token:", newToken);
+      // 2. Try to fetch DEFINITIVE user state from backend
       const response = await fetch(`${API_URL}/user/me`, {
-        headers: { Authorization: `Bearer ${newToken}` }
+        method: "GET",
+        headers: { 
+          "Authorization": `Bearer ${newToken}`,
+          "Content-Type": "application/json"
+        }
       });
-      const freshUser = await response.json();
       
-      if (freshUser && freshUser._id) {
+      const data = await response.json();
+      console.log("User fetch response:", data);
+      
+      if (response.ok && data) {
         // Map _id to id for frontend consistency
-        const processedUser = { ...freshUser, id: freshUser._id };
+        const processedUser = { ...data, id: data._id || data.id || newUser.id };
         await SecureStore.setItemAsync('userData', JSON.stringify(processedUser));
         setUser(processedUser);
       } else {
-        // Fallback to the user object provided by login/signup if /me fails
+        console.log("Fetch failed, using returned user object");
+        // Fallback to the user object provided by login/signup if /profile fails
         await SecureStore.setItemAsync('userData', JSON.stringify(newUser));
         setUser(newUser);
       }
     } catch (err) {
-      console.error('Failed to fetch fresh user during sign in', err);
-      // Fallback
+      console.log("Network error during user fetch, using fallback:", err);
+      // Fallback - VERY IMPORTANT to prevent stuck UI
       await SecureStore.setItemAsync('userData', JSON.stringify(newUser));
       setUser(newUser);
     }

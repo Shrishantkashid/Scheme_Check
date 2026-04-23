@@ -7,7 +7,16 @@ const router = express.Router();
 // Signup Route
 router.post('/signup', async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, name, email, password } = req.body;
+    const finalName = fullName || name;
+
+    if (!finalName) {
+      return res.status(400).json({ message: "Full name is required" });
+    }
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
 
     // Check if user already exists
     let user = await User.findOne({ email });
@@ -21,7 +30,7 @@ router.post('/signup', async (req, res) => {
 
     // Create new user
     user = new User({
-      fullName,
+      fullName: finalName,
       email,
       password: hashedPassword,
     });
@@ -45,7 +54,7 @@ router.post('/signup', async (req, res) => {
       } 
     });
   } catch (error) {
-    console.error(error);
+    console.error("Signup error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 });

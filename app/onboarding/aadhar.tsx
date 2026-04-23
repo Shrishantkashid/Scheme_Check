@@ -5,7 +5,6 @@ import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import axios from 'axios';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -43,15 +42,22 @@ export default function AadharOnboarding() {
       };
 
       // Save pre-filled data to backend
-      const response = await axios.put(
-        `${API_URL}/user/profile`,
-        {
+      const res = await fetch(`${API_URL}/user/profile`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
           profile: mockData,
           lastQuestionId: 'category', // Resume from category
           isOnboarded: false
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to save Aadhaar data');
+      }
 
       // Update local auth context
       updateUser({

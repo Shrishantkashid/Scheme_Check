@@ -5,8 +5,6 @@ import { StatusBar } from 'expo-status-bar';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp, FadeInRight } from 'react-native-reanimated';
-import axios from 'axios';
-
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
@@ -30,10 +28,20 @@ export default function DashboardScreen() {
     if (!token) return;
     try {
       setLoading(true);
-      const res = await axios.get(`${API_URL}/schemes/recommend`, {
-        headers: { Authorization: `Bearer ${token}` }
+      const res = await fetch(`${API_URL}/schemes/recommend`, {
+        method: "GET",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
-      setRecommendations(res.data.recommendations);
+      const data = await res.json();
+      
+      if (res.ok) {
+        setRecommendations(data.recommendations);
+      } else {
+        throw new Error('Failed to fetch recommendations');
+      }
     } catch (error) {
       console.error('Error fetching recommendations:', error);
       setRecommendations(SCHEMES.slice(0, 3));

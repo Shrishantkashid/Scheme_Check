@@ -6,15 +6,13 @@ import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
+import { API_URL } from '@/constants/config';
 import { Colors } from '@/constants/theme';
-
-const API_URL = "http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api";
 
 const { width } = Dimensions.get('window');
 
@@ -34,30 +32,52 @@ export default function SignUpScreen() {
     }
 
     setIsLoading(true);
+
     try {
-      console.log("Sending signup request");
-      const response = await axios.post(`${API_URL}/auth/signup`, {
-        name: fullName,
-        email,
-        password,
+      console.log("Sending data:", { fullName, email, password });
+
+      const res = await fetch("http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullName,
+          email: email,
+          password: password,
+        }),
       });
 
-      const { token, user } = response.data;
-      
-      // Use signIn from AuthContext
-      await signIn(token, user);
-      
-      Alert.alert('Success', 'Account created successfully!');
-      // router.replace is handled by AuthContext useEffect
-    } catch (error: any) {
-  console.log("Error full:", error.response?.data || error.message); // 👈 ADD THIS
+      const data = await res.json();
+      console.log("DATA:", data);
 
-  const message =
-    error.response?.data?.message || 'Something went wrong. Please try again.';
+      if (res.ok) {
+        const { token, user } = data;
+        // Use signIn from AuthContext to complete the flow
+        await signIn(token, user);
+        Alert.alert('Success', 'Account created successfully!');
+      } else {
+        const message = data.message || 'Something went wrong. Please try again.';
+        Alert.alert('Signup Failed', message);
+      }
 
-  Alert.alert('Signup Failed', message);
-} finally {
+    } catch (err) {
+      console.log("ERROR:", err);
+      Alert.alert("Error", "Network failed");
+    } finally {
       setIsLoading(false);
+    }
+  };
+
+  const testAPI = async () => {
+    try {
+      const res = await fetch("http://ec2-34-230-0-208.compute-1.amazonaws.com:5000");
+      const text = await res.text();
+      console.log("TEST SUCCESS:", text);
+      Alert.alert("SUCCESS", text);
+    } catch (err) {
+      console.log("TEST ERROR:", err);
+      Alert.alert("ERROR", "Cannot reach backend");
     }
   };
 
@@ -132,6 +152,13 @@ export default function SignUpScreen() {
               <SocialButton icon="logo-google" />
               <SocialButton icon="logo-apple" />
             </View>
+
+            <TouchableOpacity 
+              onPress={testAPI} 
+              style={{ marginTop: 20, padding: 10, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 10, alignItems: 'center' }}
+            >
+              <ThemedText style={{ color: '#00FF00', fontWeight: 'bold' }}>TEST BACKEND</ThemedText>
+            </TouchableOpacity>
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(600).duration(800)} style={styles.footer}>

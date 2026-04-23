@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeIn, useAnimatedStyle, withRepeat, withTiming, withSequence } from 'react-native-reanimated';
 import * as Speech from 'expo-speech';
 import { Audio } from 'expo-av';
-import axios from 'axios';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -131,14 +130,16 @@ export default function VoiceOnboarding() {
         type: 'audio/m4a',
       });
 
-      const response = await axios.post(`${API_URL}/speech/transcribe`, formData, {
+      const res = await fetch(`${API_URL}/speech/transcribe`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
         },
+        body: formData
       });
 
-      const transcription = response.data.transcription;
+      const data = await res.json();
+      const transcription = data.transcription;
       if (transcription) {
         setHeardText(`" ${transcription} "`);
         matchResultToChoice(transcription);
