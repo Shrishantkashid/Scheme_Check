@@ -13,7 +13,8 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
-import { API_URL } from '@/constants/config';
+
+const API_URL = "http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api";
 
 import { useAuth } from '@/context/auth';
 
