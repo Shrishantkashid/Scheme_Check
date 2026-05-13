@@ -1,12 +1,27 @@
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
-// For local development, use your computer's local IP address
-// You can find your IP by running 'ipconfig' (Windows) or 'ifconfig' (Mac/Linux)
-// CURRENT IP: 10.219.114.148
+const LOCAL_BACKEND_PORT = '5000';
 
-// Use EXPO_PUBLIC_ prefix for environment variables to be accessible in the app
-// Production URL should be set in EAS secrets or a .env file
+// Use EXPO_PUBLIC_API_URL when you need to override the local backend URL.
 const EXPO_PUBLIC_API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export const API_URL = EXPO_PUBLIC_API_URL || 'http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api';
+const getLocalBackendHost = () => {
+  const hostUri = Constants.expoConfig?.hostUri ?? Constants.expoGoConfig?.debuggerHost;
+  const host = hostUri?.split(':')[0];
+
+  if (host) {
+    return host;
+  }
+
+  if (Platform.OS === 'android') {
+    // Android emulators cannot reach the host machine through localhost.
+    return '10.0.2.2';
+  }
+
+  return 'localhost';
+};
+
+const LOCAL_API_URL = `http://${getLocalBackendHost()}:${LOCAL_BACKEND_PORT}/api`;
+
+export const API_URL = EXPO_PUBLIC_API_URL || LOCAL_API_URL;
