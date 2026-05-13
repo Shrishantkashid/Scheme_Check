@@ -136,7 +136,7 @@ export default function LoginScreen() {
           <Animated.View entering={FadeInDown.delay(600).duration(800)} style={styles.footer}>
             <TouchableOpacity onPress={() => router.push('/signup')}>
               <ThemedText style={styles.footerText}>
-                Don't have an account? <ThemedText style={styles.footerLink}>Sign Up</ThemedText>
+                Don&apos;t have an account? <ThemedText style={styles.footerLink}>Sign Up</ThemedText>
               </ThemedText>
             </TouchableOpacity>
           </Animated.View>
