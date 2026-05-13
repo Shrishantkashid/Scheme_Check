@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,7 +14,7 @@ import { Colors } from '@/constants/theme';
 import { QuestionEngine } from '@/components/onboarding/QuestionEngine';
 import { ONBOARDING_QUESTIONS, INITIAL_QUESTION_ID } from '@/constants/questions';
 import { useAuth } from '@/context/auth';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 
 export default function VoiceOnboarding() {
   const { user, token } = useAuth();
@@ -72,22 +72,9 @@ export default function VoiceOnboarding() {
         playsInSilentModeIOS: true,
       });
 
-      const recordingOptions = {
-        ...Audio.RecordingOptionsPresets.HIGH_QUALITY,
-        android: {
-          ...Audio.RecordingOptionsPresets.HIGH_QUALITY.android,
-          extension: '.m4a',
-          outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-          audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_AAC,
-        },
-        ios: {
-          ...Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
-          extension: '.m4a',
-          audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
-        },
-      };
-
-      const { recording } = await Audio.Recording.createAsync(recordingOptions);
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
       recordingRef.current = recording;
       setIsListening(true);
       
@@ -130,7 +117,7 @@ export default function VoiceOnboarding() {
         type: 'audio/m4a',
       });
 
-      const res = await fetch(`${API_URL}/speech/transcribe`, {
+      const res = await apiFetch('/speech/transcribe', {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${token}`
@@ -138,7 +125,7 @@ export default function VoiceOnboarding() {
         body: formData
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse<{ transcription?: string }>(res);
       const transcription = data.transcription;
       if (transcription) {
         setHeardText(`" ${transcription} "`);
@@ -149,8 +136,7 @@ export default function VoiceOnboarding() {
       }
     } catch (err) {
       console.error('Transcription error', err);
-      // If the user hasn't added the API key yet, the backend will return an error
-      setHeardText('API Key Needed');
+      setHeardText(getApiErrorMessage(err, 'Voice processing failed'));
     }
   };
 

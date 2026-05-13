@@ -10,7 +10,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { useAuth } from '@/context/auth';
 
 export default function AadharOnboarding() {
@@ -42,7 +42,7 @@ export default function AadharOnboarding() {
       };
 
       // Save pre-filled data to backend
-      const res = await fetch(`${API_URL}/user/profile`, {
+      const res = await apiFetch('/user/profile', {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -55,9 +55,7 @@ export default function AadharOnboarding() {
         })
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to save Aadhaar data');
-      }
+      await parseApiResponse(res);
 
       // Update local auth context
       updateUser({
@@ -72,7 +70,7 @@ export default function AadharOnboarding() {
       ]);
     } catch (error) {
       console.error('Error with Aadhaar simulation:', error);
-      Alert.alert('Error', 'Failed to connect to Aadhaar services.');
+      Alert.alert('Error', getApiErrorMessage(error, 'Failed to connect to Aadhaar services.'));
     } finally {
       setIsLoading(false);
     }
