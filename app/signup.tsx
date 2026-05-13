@@ -9,7 +9,8 @@ import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
-import { API_URL } from '@/constants/config';
+import { API_BASE_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
 
@@ -31,7 +32,7 @@ export default function SignUpScreen() {
     try {
       console.log("Sending data:", { fullName, email, password });
 
-      const res = await fetch(`${API_URL}/auth/signup`, {
+      const res = await apiFetch('/auth/signup', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,22 +44,17 @@ export default function SignUpScreen() {
         }),
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse<{ token: string; user: any }>(res);
       console.log("DATA:", data);
 
-      if (res.ok) {
-        const { token, user } = data;
-        // Use signIn from AuthContext to complete the flow
-        await signIn(token, user);
-        Alert.alert('Success', 'Account created successfully!');
-      } else {
-        const message = data.message || 'Something went wrong. Please try again.';
-        Alert.alert('Signup Failed', message);
-      }
+      const { token, user } = data;
+      // Use signIn from AuthContext to complete the flow
+      await signIn(token, user);
+      Alert.alert('Success', 'Account created successfully!');
 
     } catch (err) {
       console.log("ERROR:", err);
-      Alert.alert("Error", "Network failed");
+      Alert.alert("Error", getApiErrorMessage(err, "Network failed"));
     } finally {
       setIsLoading(false);
     }
@@ -66,13 +62,13 @@ export default function SignUpScreen() {
 
   const testAPI = async () => {
     try {
-      const res = await fetch(API_URL.replace(/\/api$/, ''));
+      const res = await apiFetch(API_BASE_URL);
       const text = await res.text();
       console.log("TEST SUCCESS:", text);
       Alert.alert("SUCCESS", text);
     } catch (err) {
       console.log("TEST ERROR:", err);
-      Alert.alert("ERROR", "Cannot reach backend");
+      Alert.alert("ERROR", getApiErrorMessage(err, "Cannot reach backend"));
     }
   };
 
