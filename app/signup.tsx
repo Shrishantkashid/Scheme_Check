@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity, Dimensions, ScrollView, Platform, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
-import * as SecureStore from 'expo-secure-store';
-
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
 import { API_URL } from '@/constants/config';
 import { Colors } from '@/constants/theme';
-
-const { width } = Dimensions.get('window');
-
 import { useAuth } from '@/context/auth';
 
 export default function SignUpScreen() {
@@ -36,7 +31,7 @@ export default function SignUpScreen() {
     try {
       console.log("Sending data:", { fullName, email, password });
 
-      const res = await fetch("http://ec2-34-230-0-208.compute-1.amazonaws.com:5000/api/auth/signup", {
+      const res = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +66,7 @@ export default function SignUpScreen() {
 
   const testAPI = async () => {
     try {
-      const res = await fetch("http://ec2-34-230-0-208.compute-1.amazonaws.com:5000");
+      const res = await fetch(API_URL.replace(/\/api$/, ''));
       const text = await res.text();
       console.log("TEST SUCCESS:", text);
       Alert.alert("SUCCESS", text);
