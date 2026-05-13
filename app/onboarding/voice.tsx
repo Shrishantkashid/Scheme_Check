@@ -14,7 +14,7 @@ import { Colors } from '@/constants/theme';
 import { QuestionEngine } from '@/components/onboarding/QuestionEngine';
 import { ONBOARDING_QUESTIONS, INITIAL_QUESTION_ID } from '@/constants/questions';
 import { useAuth } from '@/context/auth';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 
 export default function VoiceOnboarding() {
   const { user, token } = useAuth();
@@ -117,7 +117,7 @@ export default function VoiceOnboarding() {
         type: 'audio/m4a',
       });
 
-      const res = await fetch(`${API_URL}/speech/transcribe`, {
+      const res = await apiFetch('/speech/transcribe', {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${token}`
@@ -125,7 +125,7 @@ export default function VoiceOnboarding() {
         body: formData
       });
 
-      const data = await res.json();
+      const data = await parseApiResponse<{ transcription?: string }>(res);
       const transcription = data.transcription;
       if (transcription) {
         setHeardText(`" ${transcription} "`);
@@ -136,8 +136,7 @@ export default function VoiceOnboarding() {
       }
     } catch (err) {
       console.error('Transcription error', err);
-      // If the user hasn't added the API key yet, the backend will return an error
-      setHeardText('API Key Needed');
+      setHeardText(getApiErrorMessage(err, 'Voice processing failed'));
     }
   };
 

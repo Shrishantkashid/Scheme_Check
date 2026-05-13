@@ -1,27 +1,26 @@
-import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+/**
+ * API configuration for Expo React Native.
+ *
+ * IMPORTANT FOR AWS EC2 DEPLOYMENT:
+ * 1. Set EXPO_PUBLIC_API_URL in your local/EAS environment to your deployed backend API URL.
+ *    Example: EXPO_PUBLIC_API_URL=http://YOUR_EC2_PUBLIC_IP:5000/api
+ * 2. Do not use localhost or 127.0.0.1 for physical Android/iOS devices. On a phone,
+ *    localhost points to the phone itself, not your laptop or EC2 instance.
+ * 3. If you move behind a domain or load balancer later, update EXPO_PUBLIC_API_URL
+ *    to something like https://api.yourdomain.com/api.
+ */
 
-const LOCAL_BACKEND_PORT = '5000';
+const DEFAULT_AWS_API_URL = "http://YOUR_EC2_PUBLIC_IP:5000/api";
 
-// Use EXPO_PUBLIC_API_URL when you need to override the local backend URL.
-const EXPO_PUBLIC_API_URL = process.env.EXPO_PUBLIC_API_URL;
+const normalizeApiUrl = (url: string) => url.trim().replace(/\/+$/, "");
 
-const getLocalBackendHost = () => {
-  const hostUri = Constants.expoConfig?.hostUri ?? Constants.expoGoConfig?.debuggerHost;
-  const host = hostUri?.split(':')[0];
+const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL;
 
-  if (host) {
-    return host;
-  }
+export const API_URL = normalizeApiUrl(configuredApiUrl || DEFAULT_AWS_API_URL);
+export const API_BASE_URL = API_URL.replace(/\/api$/, "");
 
-  if (Platform.OS === 'android') {
-    // Android emulators cannot reach the host machine through localhost.
-    return '10.0.2.2';
-  }
-
-  return 'localhost';
-};
-
-const LOCAL_API_URL = `http://${getLocalBackendHost()}:${LOCAL_BACKEND_PORT}/api`;
-
-export const API_URL = EXPO_PUBLIC_API_URL || LOCAL_API_URL;
+if (__DEV__ && API_URL.includes("YOUR_EC2_PUBLIC_IP")) {
+  console.warn(
+    "EXPO_PUBLIC_API_URL is not configured. Update DEFAULT_AWS_API_URL in constants/config.ts temporarily, or set EXPO_PUBLIC_API_URL to your AWS EC2 backend URL.",
+  );
+}
