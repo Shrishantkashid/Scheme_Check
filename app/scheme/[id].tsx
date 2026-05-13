@@ -4,14 +4,13 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import axios from 'axios';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { Scheme } from '@/constants/data';
 
 const { width } = Dimensions.get('window');
@@ -26,12 +25,13 @@ export default function SchemeDetailScreen() {
   useEffect(() => {
     const fetchSchemeDetails = async () => {
       try {
-        const res = await axios.get(`${API_URL}/schemes/${id}`, {
+        const res = await apiFetch(`/schemes/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setScheme(res.data);
+        const data = await parseApiResponse<Scheme>(res);
+        setScheme(data);
       } catch (error) {
-        console.error('Error fetching scheme details:', error);
+        console.error('Error fetching scheme details:', getApiErrorMessage(error));
       } finally {
         setLoading(false);
       }

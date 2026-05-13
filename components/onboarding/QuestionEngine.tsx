@@ -7,7 +7,7 @@ import Animated, { FadeInRight, FadeOutLeft, Layout } from 'react-native-reanima
 import { ThemedText } from '@/components/themed-text';
 import { Colors } from '@/constants/theme';
 import { ONBOARDING_QUESTIONS, INITIAL_QUESTION_ID, Question } from '@/constants/questions';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { useAuth } from '@/context/auth';
 
 interface QuestionEngineProps {
@@ -58,7 +58,7 @@ export function QuestionEngine({ onComplete, mode, voiceTrigger, onQuestionChang
     try {
       const isFinal = !nextId || ONBOARDING_QUESTIONS[currentId]?.isFinal;
       
-      const res = await fetch(`${API_URL}/user/profile`, {
+      const res = await apiFetch('/user/profile', {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -71,9 +71,7 @@ export function QuestionEngine({ onComplete, mode, voiceTrigger, onQuestionChang
         })
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to save progress');
-      }
+      await parseApiResponse(res);
 
       // Update local auth context
       updateUser({
@@ -92,7 +90,7 @@ export function QuestionEngine({ onComplete, mode, voiceTrigger, onQuestionChang
       }
     } catch (error) {
       console.error('Error saving answer:', error);
-      Alert.alert('Error', 'Failed to save your progress. Please try again.');
+      Alert.alert('Error', getApiErrorMessage(error, 'Failed to save your progress. Please try again.'));
     } finally {
       setIsSaving(false);
     }

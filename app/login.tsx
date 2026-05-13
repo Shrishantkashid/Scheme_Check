@@ -11,7 +11,7 @@ import * as SecureStore from 'expo-secure-store';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { Colors } from '@/constants/theme';
 
 import { useAuth } from '@/context/auth';
@@ -31,7 +31,7 @@ export default function LoginScreen() {
     setIsLoading(true);
     try {
       console.log("Attempting sign in...");
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const res = await apiFetch('/auth/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,21 +42,15 @@ export default function LoginScreen() {
         }),
       });
 
-      const data = await res.json();
-      
-      if (res.ok) {
-        const { token, user } = data;
-        // Use signIn from AuthContext
-        await signIn(token, user);
-      } else {
-        const message = data.message || 'Invalid credentials or server error.';
-        Alert.alert('Sign In Failed', message);
-      }
+      const data = await parseApiResponse<{ token: string; user: any }>(res);
+      const { token, user } = data;
+      // Use signIn from AuthContext
+      await signIn(token, user);
       
       // router.replace is handled by AuthContext useEffect
     } catch (error: any) {
       console.error('Login error:', error);
-      Alert.alert('Sign In Failed', 'Network error. Please try again.');
+      Alert.alert('Sign In Failed', getApiErrorMessage(error, 'Network error. Please try again.'));
     } finally {
       setIsLoading(false);
     }
