@@ -11,7 +11,7 @@ import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
 import { SCHEMES, Scheme } from '@/constants/data';
-import { API_URL } from '@/constants/config';
+import { apiFetch, parseApiResponse } from '@/constants/api';
 import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
@@ -28,20 +28,15 @@ export default function DashboardScreen() {
     if (!token) return;
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/schemes/recommend`, {
+      const res = await apiFetch('/schemes/recommend', {
         method: "GET",
         headers: { 
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
-      const data = await res.json();
-      
-      if (res.ok) {
-        setRecommendations(data.recommendations);
-      } else {
-        throw new Error('Failed to fetch recommendations');
-      }
+      const data = await parseApiResponse<{ recommendations: Scheme[] }>(res);
+      setRecommendations(data.recommendations);
     } catch (error) {
       console.error('Error fetching recommendations:', error);
       setRecommendations(SCHEMES.slice(0, 3));

@@ -52,7 +52,7 @@ export default function OnboardingSelection() {
           <Animated.View entering={FadeInUp.delay(200).duration(800)} style={styles.header}>
             <ThemedText style={styles.headline}>Personalize Your Experience</ThemedText>
             <ThemedText style={styles.subheadline}>
-              Hi {user?.fullName.split(' ')[0]}, choose how you'd like to provide your details for better scheme recommendations.
+              Hi {user?.fullName.split(' ')[0]}, choose how you&apos;d like to provide your details for better scheme recommendations.
             </ThemedText>
           </Animated.View>
 

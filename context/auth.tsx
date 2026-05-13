@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { useRouter, useSegments } from 'expo-router';
-import { API_URL } from '@/constants/config';
+import { apiFetch, parseApiResponse } from '@/constants/api';
 
 interface User {
   id: string;
@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       console.log("Fetching user with token:", newToken);
       // 2. Try to fetch DEFINITIVE user state from backend
-      const response = await fetch(`${API_URL}/user/me`, {
+      const response = await apiFetch('/user/me', {
         method: "GET",
         headers: { 
           "Authorization": `Bearer ${newToken}`,
@@ -92,20 +92,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       });
       
-      const data = await response.json();
+      const data = await parseApiResponse<any>(response);
       console.log("User fetch response:", data);
       
-      if (response.ok && data) {
-        // Map _id to id for frontend consistency
-        const processedUser = { ...data, id: data._id || data.id || newUser.id };
-        await SecureStore.setItemAsync('userData', JSON.stringify(processedUser));
-        setUser(processedUser);
-      } else {
-        console.log("Fetch failed, using returned user object");
-        // Fallback to the user object provided by login/signup if /profile fails
-        await SecureStore.setItemAsync('userData', JSON.stringify(newUser));
-        setUser(newUser);
-      }
+      // Map _id to id for frontend consistency
+      const processedUser = { ...data, id: data._id || data.id || newUser.id };
+      await SecureStore.setItemAsync('userData', JSON.stringify(processedUser));
+      setUser(processedUser);
     } catch (err) {
       console.log("Network error during user fetch, using fallback:", err);
       // Fallback - VERY IMPORTANT to prevent stuck UI

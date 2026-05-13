@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import axios from 'axios';
 import { debounce } from 'lodash';
 
 import { ThemedText } from '@/components/themed-text';
@@ -14,7 +13,7 @@ import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
 import { SCHEMES, Scheme } from '@/constants/data';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 
 const { width } = Dimensions.get('window');
 
@@ -35,18 +34,19 @@ export default function ExploreScreen() {
     if (!token) return;
     try {
       setLoading(true);
-      let url = `${API_URL}/schemes?limit=50`;
+      let url = `/schemes?limit=50`;
       if (query) url += `&search=${encodeURIComponent(query)}`;
       if (cat !== 'All') url += `&category=${encodeURIComponent(cat)}`;
       if (st !== 'All') url += `&state=${encodeURIComponent(st)}`;
 
-      const res = await axios.get(url, {
+      const res = await apiFetch(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setSchemes(res.data.schemes);
-      setTotal(res.data.total);
+      const data = await parseApiResponse<{ schemes: Scheme[]; total: number }>(res);
+      setSchemes(data.schemes);
+      setTotal(data.total);
     } catch (error) {
-      console.error('Error fetching schemes:', error);
+      console.error('Error fetching schemes:', getApiErrorMessage(error));
     } finally {
       setLoading(false);
     }

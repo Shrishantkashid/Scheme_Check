@@ -11,7 +11,7 @@ import { ThemedView } from '@/components/themed-view';
 import { AmbientBackground } from '@/components/ambient-background';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
-import { API_URL } from '@/constants/config';
+import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 
 export default function ProfileScreen() {
   const { user, token, signOut, updateUser } = useAuth();
@@ -33,7 +33,7 @@ export default function ProfileScreen() {
 
   const handleUpdateInfo = async () => {
     try {
-      const res = await fetch(`${API_URL}/user/update-info`, {
+      const res = await apiFetch('/user/update-info', {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -41,18 +41,13 @@ export default function ProfileScreen() {
         },
         body: JSON.stringify(editValues)
       });
-      const data = await res.json();
-      
-      if (res.ok) {
-        updateUser(data.user);
-        setIsEditing(false);
-        Alert.alert('Success', 'Profile updated successfully');
-      } else {
-        throw new Error(data.message || 'Failed to update profile');
-      }
+      const data = await parseApiResponse<{ user: any }>(res);
+      updateUser(data.user);
+      setIsEditing(false);
+      Alert.alert('Success', 'Profile updated successfully');
     } catch (error: any) {
       console.error(error);
-      Alert.alert('Error', error.message || 'Failed to update profile');
+      Alert.alert('Error', getApiErrorMessage(error, 'Failed to update profile'));
     }
   };
 
@@ -69,7 +64,7 @@ export default function ProfileScreen() {
             setIsReseting(true);
             try {
               // We just set isOnboarded to false but keep profile data
-              const res = await fetch(`${API_URL}/user/profile`, {
+              const res = await apiFetch('/user/profile', {
                 method: "PUT",
                 headers: {
                   "Authorization": `Bearer ${token}`,
@@ -78,18 +73,16 @@ export default function ProfileScreen() {
                 body: JSON.stringify({ isOnboarded: false })
               });
               
-              if (res.ok) {
-                updateUser({ isOnboarded: false });
+              await parseApiResponse(res);
+              updateUser({ isOnboarded: false });
                 
                 // Small delay for AuthContext state propagation
                 setTimeout(() => {
                   router.replace('/onboarding/manual');
                 }, 100);
-              } else {
-                throw new Error('Failed to update status');
-              }
+
             } catch (err) {
-              Alert.alert('Error', 'Failed to update status');
+              Alert.alert('Error', getApiErrorMessage(err, 'Failed to update status'));
             } finally {
               setIsReseting(false);
             }
@@ -102,7 +95,7 @@ export default function ProfileScreen() {
             setIsReseting(true);
             try {
               // We use the stabilized PUT profile route with a reset flag
-              const res = await fetch(`${API_URL}/user/profile`, {
+              const res = await apiFetch('/user/profile', {
                 method: "PUT",
                 headers: {
                   "Authorization": `Bearer ${token}`,
@@ -111,8 +104,8 @@ export default function ProfileScreen() {
                 body: JSON.stringify({ reset: true })
               });
               
-              if (res.ok) {
-                // CRITICAL: Wipe local state BEFORE redirecting
+              await parseApiResponse(res);
+              // CRITICAL: Wipe local state BEFORE redirecting
                 updateUser({ 
                   isOnboarded: false, 
                   lastQuestionId: null, 
@@ -123,12 +116,10 @@ export default function ProfileScreen() {
                 setTimeout(() => {
                   router.replace('/onboarding');
                 }, 100);
-              } else {
-                throw new Error('Failed to perform a fresh reset');
-              }
+
             } catch (error: any) {
               console.error('Reset Error Details:', error.message);
-              Alert.alert('Error', 'Failed to perform a fresh reset. Please check your connection.');
+              Alert.alert('Error', getApiErrorMessage(error, 'Failed to perform a fresh reset. Please check your connection.'));
             } finally {
               setIsReseting(false);
             }
