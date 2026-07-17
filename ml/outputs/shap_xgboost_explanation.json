@@ -1,0 +1,46 @@
+{
+  "scheme": "Self Employment Lending (National Corporations)",
+  "prediction_confidence": 0.996195912361145,
+  "top_feature_contributions": [
+    [
+      "numeric__age",
+      0.0
+    ],
+    [
+      "numeric__income",
+      0.0
+    ],
+    [
+      "numeric__family_size",
+      0.0
+    ],
+    [
+      "categorical__caste_general",
+      0.0
+    ],
+    [
+      "categorical__caste_obc",
+      0.0
+    ],
+    [
+      "categorical__caste_sc",
+      0.0
+    ],
+    [
+      "categorical__caste_st",
+      0.0
+    ],
+    [
+      "categorical__occupation_artisan",
+      0.0
+    ],
+    [
+      "categorical__occupation_daily_wage",
+      0.0
+    ],
+    [
+      "categorical__occupation_farmer",
+      0.0
+    ]
+  ]
+}

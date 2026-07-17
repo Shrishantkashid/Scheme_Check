@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Scheme = require('../models/Scheme');
 const User = require('../models/User');
-const { getRecommendations } = require('../services/recommendationService');
+const { getRecommendations, getCategoryNews } = require('../services/recommendationService');
 const { getTranslatedScheme } = require('../services/translationService');
 
 /**
@@ -31,6 +31,30 @@ router.get('/recommend', auth, async (req, res) => {
   } catch (error) {
     console.error('Error fetching recommendations:', error);
     res.status(500).json({ message: 'Error generating recommendations', error: error.message });
+  }
+});
+
+/**
+ * @route   GET /api/schemes/updates
+ * @desc    Get dynamic news updates based on user profile
+ * @access  Private
+ */
+router.get('/updates', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.profile || Object.keys(user.profile).length === 0) {
+      return res.status(400).json({ message: 'User profile is empty.' });
+    }
+
+    const news = await getCategoryNews(user.profile);
+    res.json(news);
+  } catch (error) {
+    console.error('Error fetching news updates:', error);
+    res.status(500).json({ message: 'Error generating news', error: error.message });
   }
 });
 

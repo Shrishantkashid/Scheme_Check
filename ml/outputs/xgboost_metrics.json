@@ -1,0 +1,145 @@
+{
+  "subset_accuracy": 1.0,
+  "classification_report": {
+    "PM Suraksha Bima Yojana (PMSBY)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 102.0
+    },
+    "PM Jeevan Jyoti Bima Yojana (PMJJBY)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 86.0
+    },
+    "National Apprenticeship Promotion Scheme (NAPS)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 38.0
+    },
+    "Self Employment Lending (National Corporations)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 61.0
+    },
+    "Atal Pension Yojana (APY)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 61.0
+    },
+    "KSTDC Tourist Taxi Scheme": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 31.0
+    },
+    "One District One Product (ODOP)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 42.0
+    },
+    "Agri-Infrastructure Fund": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 33.0
+    },
+    "Elevate (Startup Grants for Women/Tier-2)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 35.0
+    },
+    "PM MUDRA Yojana (PMMY)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 35.0
+    },
+    "PM Formalization of Micro Food Processing Enterprises (PMFME)": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 33.0
+    },
+    "micro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 557.0
+    },
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 557.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 557.0
+    },
+    "samples avg": {
+      "precision": 0.975,
+      "recall": 0.975,
+      "f1-score": 0.975,
+      "support": 557.0
+    }
+  },
+  "feature_importance": {
+    "categorical__occupation_self_employed": 0.19515174627304077,
+    "numeric__age": 0.19099311530590057,
+    "categorical__occupation_farmer": 0.12490443885326385,
+    "categorical__occupation_unemployed": 0.11061634868383408,
+    "categorical__occupation_artisan": 0.09881622344255447,
+    "categorical__occupation_student": 0.09162461757659912,
+    "categorical__occupation_daily_wage": 0.07457190752029419,
+    "categorical__caste_general": 0.041676487773656845,
+    "numeric__income": 0.027352411299943924,
+    "categorical__caste_obc": 0.017995638772845268,
+    "categorical__caste_sc": 0.012293311767280102,
+    "categorical__caste_st": 0.010561220347881317,
+    "numeric__family_size": 0.0034425316844135523
+  },
+  "labels": [
+    "PM Suraksha Bima Yojana (PMSBY)",
+    "PM Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "National Apprenticeship Promotion Scheme (NAPS)",
+    "Self Employment Lending (National Corporations)",
+    "Atal Pension Yojana (APY)",
+    "KSTDC Tourist Taxi Scheme",
+    "One District One Product (ODOP)",
+    "Agri-Infrastructure Fund",
+    "Elevate (Startup Grants for Women/Tier-2)",
+    "PM MUDRA Yojana (PMMY)",
+    "PM Formalization of Micro Food Processing Enterprises (PMFME)"
+  ],
+  "label_map": {
+    "Agri-Infrastructure Fund": "Agri-Infrastructure Fund",
+    "PM MUDRA Yojana (PMMY)": "PM MUDRA Yojana (PMMY)",
+    "PM Formalization of Micro Food Processing Enterprises (PMFME)": "PM Formalization of Micro Food Processing Enterprises (PMFME)",
+    "One District One Product (ODOP)": "One District One Product (ODOP)",
+    "Self Employment Lending (National Corporations)": "Self Employment Lending (National Corporations)",
+    "KSTDC Tourist Taxi Scheme": "KSTDC Tourist Taxi Scheme",
+    "National Apprenticeship Promotion Scheme (NAPS)": "National Apprenticeship Promotion Scheme (NAPS)",
+    "Elevate (Startup Grants for Women/Tier-2)": "Elevate (Startup Grants for Women/Tier-2)",
+    "PM Jeevan Jyoti Bima Yojana (PMJJBY)": "PM Jeevan Jyoti Bima Yojana (PMJJBY)",
+    "PM Suraksha Bima Yojana (PMSBY)": "PM Suraksha Bima Yojana (PMSBY)",
+    "PM Awas Yojana - Gramin (PMAY-G)": "PM Awas Yojana - Gramin (PMAY-G)",
+    "Atal Pension Yojana (APY)": "Atal Pension Yojana (APY)",
+    "PM Ujjwala Yojana": "PM Ujjwala Yojana",
+    "National Food Security Act (NFSA)": "National Food Security Act (NFSA)",
+    "PM Garib Kalyan Anna Yojana": "PM Garib Kalyan Anna Yojana",
+    "Deendayal Antyodaya Yojana (NULM)": "Deendayal Antyodaya Yojana (NULM)",
+    "National Social Assistance Programme": "National Social Assistance Programme",
+    "PM-eBus Sewa": "PM-eBus Sewa",
+    "Thayi Bhagya": "Thayi Bhagya",
+    "Madilu Kit": "Madilu Kit"
+  }
+}

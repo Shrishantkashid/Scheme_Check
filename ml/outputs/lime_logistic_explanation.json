@@ -1,0 +1,34 @@
+[
+  [
+    "categorical__occupation_artisan <= 0.00",
+    0.25814851667031474
+  ],
+  [
+    "categorical__occupation_self_employed <= 0.00",
+    -0.10871146355015213
+  ],
+  [
+    "categorical__occupation_unemployed <= 0.00",
+    -0.06564328360589428
+  ],
+  [
+    "categorical__occupation_farmer <= 0.00",
+    -0.056067529130119004
+  ],
+  [
+    "categorical__occupation_student > 0.00",
+    0.019161987543937158
+  ],
+  [
+    "categorical__caste_general <= 0.00",
+    0.018106507602484587
+  ],
+  [
+    "-0.71 < numeric__income <= -0.26",
+    0.01123553526165075
+  ],
+  [
+    "categorical__occupation_daily_wage <= 0.00",
+    -0.007791478794651913
+  ]
+]

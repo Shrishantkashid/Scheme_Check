@@ -154,6 +154,45 @@ const getRecommendations = async (userProfile, targetLang = 'en') => {
   }
 };
 
+const getCategoryNews = async (userProfile) => {
+  try {
+    const { category = 'general', occupation = 'student', location = 'India' } = userProfile;
+    
+    const prompt = `
+      You are an expert news aggregator in India. The user is a ${category} ${occupation} living in ${location}.
+      Generate 3 realistic, very recent news updates, government policy changes, or protests in India that directly affect this specific demographic.
+      
+      Output ONLY a valid JSON object with a single key "news" containing an array of 3 objects. Each object must have keys:
+      "id" (string, unique like "news_1"),
+      "title" (string, max 60 chars), 
+      "date" (string, e.g., "2 hours ago", "1 day ago"), 
+      "type" (string, either "Update" or "Protest"), 
+      "content" (string, detailed paragraph explaining the news)
+    `;
+
+    const completion = await groq.chat.completions.create({
+      messages: [
+        { role: "system", content: "You are a helpful assistant that outputs ONLY valid JSON." },
+        { role: "user", content: prompt }
+      ],
+      model: "llama-3.3-70b-versatile",
+      response_format: { type: "json_object" }
+    });
+
+    try {
+      const aiResponse = JSON.parse(completion.choices[0].message.content);
+      return aiResponse.news || [];
+    } catch (e) {
+      console.error("Failed to parse news:", e);
+      return [];
+    }
+  } catch (error) {
+    console.error("News Service Error:", error);
+    return [];
+  }
+};
+
 module.exports = {
-  getRecommendations
+  getRecommendations,
+  getCategoryNews
 };

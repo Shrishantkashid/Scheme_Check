@@ -15,12 +15,14 @@ import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api'
 import { Colors } from '@/constants/theme';
 
 import { useAuth } from '@/context/auth';
+import { useLanguage } from '@/context/language';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
+  const { t } = useLanguage();
 
   const handleSignIn = async () => {
     if (!email || !password) {
@@ -70,13 +72,13 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <Animated.View entering={FadeInUp.delay(200).duration(800)} style={styles.header}>
-            <ThemedText style={styles.headline}>Welcome Back</ThemedText>
-            <ThemedText style={styles.subheadline}>Access your intelligence suite and personalized recommendations.</ThemedText>
+            <ThemedText style={styles.headline}>{t('welcome_back')}</ThemedText>
+            <ThemedText style={styles.subheadline}>{t('access_suite')}</ThemedText>
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(400).duration(800)} style={styles.form}>
             <GlassInput 
-              placeholder="Email Address" 
+              placeholder={t('email_address')} 
               icon="mail-outline" 
               keyboardType="email-address"
               autoCapitalize="none"
@@ -84,7 +86,7 @@ export default function LoginScreen() {
               onChangeText={setEmail}
             />
             <GlassInput 
-              placeholder="Password" 
+              placeholder={t('password')} 
               icon="lock-closed-outline" 
               secureTextEntry
               value={password}
@@ -92,7 +94,7 @@ export default function LoginScreen() {
             />
 
             <TouchableOpacity style={styles.forgotPassword}>
-              <ThemedText style={styles.forgotPasswordText}>Forgot Password?</ThemedText>
+              <ThemedText style={styles.forgotPasswordText}>{t('forgot_password')}</ThemedText>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -110,14 +112,14 @@ export default function LoginScreen() {
                 {isLoading ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <ThemedText style={styles.signInButtonText}>Sign In</ThemedText>
+                  <ThemedText style={styles.signInButtonText}>{t('sign_in')}</ThemedText>
                 )}
               </LinearGradient>
             </TouchableOpacity>
 
             <View style={styles.dividerContainer}>
               <View style={styles.divider} />
-              <ThemedText style={styles.dividerText}>OR SIGN IN WITH</ThemedText>
+              <ThemedText style={styles.dividerText}>{t('or_sign_in_with')}</ThemedText>
               <View style={styles.divider} />
             </View>
 
@@ -130,7 +132,7 @@ export default function LoginScreen() {
           <Animated.View entering={FadeInDown.delay(600).duration(800)} style={styles.footer}>
             <TouchableOpacity onPress={() => router.push('/signup')}>
               <ThemedText style={styles.footerText}>
-                Don&apos;t have an account? <ThemedText style={styles.footerLink}>Sign Up</ThemedText>
+                {t('dont_have_account')} <ThemedText style={styles.footerLink}>{t('sign_up')}</ThemedText>
               </ThemedText>
             </TouchableOpacity>
           </Animated.View>

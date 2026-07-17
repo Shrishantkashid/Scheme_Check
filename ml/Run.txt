@@ -1,0 +1,5 @@
+ml\.venv\Scripts\activate
+python -m ml.datasets.generate_training_data
+python -m ml.training.train_logistic_regression
+python -m ml.training.train_xgboost_ranker
+python -m ml.explainability.explain_predictions

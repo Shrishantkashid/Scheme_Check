@@ -22,6 +22,8 @@ export default function DashboardScreen() {
   const [newsSearch, setNewsSearch] = useState('');
   const [recommendations, setRecommendations] = useState<Scheme[]>([]);
   const [loading, setLoading] = useState(true);
+  const [newsUpdates, setNewsUpdates] = useState<any[]>([]);
+  const [loadingNews, setLoadingNews] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchRecommendations = async () => {
@@ -46,17 +48,39 @@ export default function DashboardScreen() {
     }
   };
 
+  const fetchNewsUpdates = async () => {
+    if (!token) return;
+    try {
+      setLoadingNews(true);
+      const res = await apiFetch('/schemes/updates', {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      const data = await parseApiResponse<any[]>(res);
+      if (Array.isArray(data)) {
+        setNewsUpdates(data);
+      }
+    } catch (error) {
+      console.error('Error fetching news:', error);
+    } finally {
+      setLoadingNews(false);
+    }
+  };
+
   useEffect(() => {
     if (token && user?.isOnboarded) {
       fetchRecommendations();
+      fetchNewsUpdates();
     } else {
       setLoading(false);
+      setLoadingNews(false);
     }
   }, [token, user?.isOnboarded]);
 
   const onRefresh = () => {
     setRefreshing(true);
     fetchRecommendations();
+    fetchNewsUpdates();
   };
 
   const filteredSchemes = useMemo(() => {
@@ -181,13 +205,43 @@ export default function DashboardScreen() {
             </View>
           </View>
 
-          {/* News Section (Empty per request) */}
-          <View style={[styles.section, { marginBottom: 40 }]}>
+          {/* News Section */}
+          <View style={[styles.section, { marginBottom: 100 }]}>
             <ThemedText style={styles.sectionTitle}>National Updates & Protests</ThemedText>
-            <BlurView intensity={10} tint="light" style={styles.emptyNewsBox}>
-              <Ionicons name="notifications-off-outline" size={32} color="rgba(255,255,255,0.2)" />
-              <ThemedText style={styles.emptyNewsText}>No recent news updates available in your region.</ThemedText>
-            </BlurView>
+            {loadingNews ? (
+              <View style={[styles.loadingContainer, { height: 100 }]}>
+                <ActivityIndicator color={Colors.premium.primary} />
+                <ThemedText style={styles.loadingText}>Fetching latest updates...</ThemedText>
+              </View>
+            ) : newsUpdates.length > 0 ? (
+              <View style={styles.verticalList}>
+                {newsUpdates.map((news, index) => (
+                  <Animated.View key={news.id || index} entering={FadeInUp.delay(900 + index * 100)}>
+                    <TouchableOpacity 
+                      activeOpacity={0.8} 
+                      style={styles.listItem}
+                      onPress={() => router.push({ pathname: `/news/${news.id || index}`, params: { data: JSON.stringify(news) } })}
+                    >
+                      <BlurView intensity={15} tint="light" style={styles.listItemBlur}>
+                        <View style={[styles.listItemIcon, { backgroundColor: news.type === 'Protest' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(59, 130, 246, 0.1)' }]}>
+                          <Ionicons name={news.type === 'Protest' ? 'warning-outline' : 'megaphone-outline'} size={24} color={news.type === 'Protest' ? '#ef4444' : '#3b82f6'} />
+                        </View>
+                        <View style={styles.listItemContent}>
+                          <ThemedText style={styles.listItemTitle} numberOfLines={2}>{news.title}</ThemedText>
+                          <ThemedText style={styles.listItemCategory}>{news.type} • {news.date}</ThemedText>
+                        </View>
+                        <Ionicons name="chevron-forward" size={20} color="rgba(255,255,255,0.2)" />
+                      </BlurView>
+                    </TouchableOpacity>
+                  </Animated.View>
+                ))}
+              </View>
+            ) : (
+              <BlurView intensity={10} tint="light" style={styles.emptyNewsBox}>
+                <Ionicons name="notifications-off-outline" size={32} color="rgba(255,255,255,0.2)" />
+                <ThemedText style={styles.emptyNewsText}>No recent updates found for your profile.</ThemedText>
+              </BlurView>
+            )}
           </View>
 
         </ScrollView>
@@ -211,7 +265,7 @@ function SchemeCard({ scheme, onPress }: { scheme: Scheme, onPress: () => void }
           )}
         </View>
         <ThemedText numberOfLines={1} style={styles.cardTitle}>{scheme.title}</ThemedText>
-        <ThemedText numberOfLines={3} style={styles.cardReason}>
+        <ThemedText numberOfLines={2} style={styles.cardReason}>
           {scheme.personalReason || scheme.description}
         </ThemedText>
         
@@ -315,6 +369,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginLeft: 10,
     fontSize: 14,
+    height: '100%',
+    padding: 0,
   },
   section: {
     marginBottom: 32,

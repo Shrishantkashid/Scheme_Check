@@ -45,7 +45,24 @@ export const translations = {
     saved: "Saved",
     cancel: "Cancel",
     save_changes: "Save Changes",
-    edit_profile: "Edit Profile"
+    edit_profile: "Edit Profile",
+    
+    // Auth Screens
+    welcome_back: "Welcome Back",
+    access_suite: "Access your intelligence suite and personalized recommendations.",
+    email_address: "Email Address",
+    password: "Password",
+    forgot_password: "Forgot Password?",
+    sign_in: "Sign In",
+    or_sign_in_with: "OR SIGN IN WITH",
+    dont_have_account: "Don't have an account?",
+    sign_up: "Sign Up",
+    create_account: "Create Account",
+    join_circle: "Join the elite circle of financial intelligence.",
+    full_name: "Full Name",
+    or_continue_with: "OR CONTINUE WITH",
+    already_have_account: "Already have an account?",
+    test_backend: "TEST BACKEND"
   },
   kn: {
     // Navigation
@@ -93,7 +110,24 @@ export const translations = {
     saved: "ಉಳಿಸಲಾಗಿದೆ",
     cancel: "ರದ್ದುಮಾಡಿ",
     save_changes: "ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ",
-    edit_profile: "ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ"
+    edit_profile: "ಪ್ರೊಫೈಲ್ ಸಂಪಾದಿಸಿ",
+    
+    // Auth Screens
+    welcome_back: "ಮತ್ತೆ ಸ್ವಾಗತ",
+    access_suite: "ನಿಮ್ಮ ಬುದ್ಧಿಮತ್ತೆ ಕೇಂದ್ರ ಮತ್ತು ವೈಯಕ್ತಿಕ ಶಿಫಾರಸುಗಳನ್ನು ಪ್ರವೇಶಿಸಿ.",
+    email_address: "ಇಮೇಲ್ ವಿಳಾಸ",
+    password: "ಪಾಸ್ವರ್ಡ್",
+    forgot_password: "ಪಾಸ್ವರ್ಡ್ ಮರೆತಿದ್ದೀರಾ?",
+    sign_in: "ಸೈನ್ ಇನ್",
+    or_sign_in_with: "ಅಥವಾ ಇದರೊಂದಿಗೆ ಸೈನ್ ಇನ್ ಮಾಡಿ",
+    dont_have_account: "ಖಾತೆ ಇಲ್ಲವೇ?",
+    sign_up: "ಸೈನ್ ಅಪ್",
+    create_account: "ಖಾತೆ ರಚಿಸಿ",
+    join_circle: "ಹಣಕಾಸು ಬುದ್ಧಿಮತ್ತೆಯ ಗಣ್ಯ ವಲಯಕ್ಕೆ ಸೇರಿ.",
+    full_name: "ಪೂರ್ಣ ಹೆಸರು",
+    or_continue_with: "ಅಥವಾ ಇದರೊಂದಿಗೆ ಮುಂದುವರಿಸಿ",
+    already_have_account: "ಈಗಾಗಲೇ ಖಾತೆ ಹೊಂದಿದ್ದೀರಾ?",
+    test_backend: "ಬ್ಯಾಕೆಂಡ್ ಪರೀಕ್ಷಿಸಿ"
   }
 };
 

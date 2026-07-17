@@ -1,47 +1,131 @@
-# Scheme Check
+# SchemesCheck
 
-Expo React Native frontend with a Node.js/Express backend for scheme recommendations.
+SchemesCheck is an AI-powered platform designed to provide personalized government scheme recommendations to citizens. 
 
-## AWS/Expo API configuration
+The project is structured into three main layers:
+1. **Frontend:** A React Native mobile application built with Expo and Expo Router.
+2. **Backend:** A Node.js and Express API with a MongoDB database.
+3. **Machine Learning:** An isolated Python layer for experimenting with models for scheme eligibility classification and ranking.
 
-Physical Android/iOS devices cannot call `localhost` or `127.0.0.1` on your development machine or EC2 server. Configure the Expo app with the deployed AWS backend URL instead:
+---
 
-```bash
-EXPO_PUBLIC_API_URL=http://YOUR_EC2_PUBLIC_IP:5000/api
-```
+## 🏗️ Project Architecture
 
-Update `YOUR_EC2_PUBLIC_IP` to your EC2 public IP, public DNS, or HTTPS domain. If you later add a domain or load balancer, change the value to something like:
+### 1. Frontend (Mobile App)
+- **Framework:** Expo (React Native)
+- **Routing:** Expo Router (File-based routing under `app/`)
+- **UI & Navigation:** Bottom tabs, modals, and dynamic screens.
+- **Features:** 
+  - User Authentication (Login / Signup)
+  - Profile Onboarding
+  - Scheme Recommendations and News Updates
+  - Multilingual support for viewing scheme details
+  - Speech-to-text input (supported via backend)
 
-```bash
-EXPO_PUBLIC_API_URL=https://api.yourdomain.com/api
-```
+### 2. Backend (Node.js/Express API)
+Located in the `backend/` directory.
+- **Database:** MongoDB (via Mongoose)
+- **Authentication:** JWT (JSON Web Tokens) & bcryptjs
+- **Key Services:**
+  - `recommendationService.js`: Generates AI-powered personalized scheme recommendations and dynamic news updates based on a user's profile.
+  - `translationService.js`: Translates scheme information into different languages (e.g., Kannada, English).
+  - Google Cloud Speech-to-Text Integration (`routes/speech.js`) for audio transcription.
+- **Routes:**
+  - `/api/auth`: User registration and login.
+  - `/api/user`: User profile management.
+  - `/api/schemes`: Fetch, filter, and recommend schemes.
+  - `/api/speech`: Audio transcription endpoint.
 
-The fallback placeholder is documented in `constants/config.ts`; prefer using `.env`/EAS environment variables instead of editing code for each deployment. `app.json` keeps `android.usesCleartextTraffic` enabled so HTTP EC2 URLs can be tested on Android, but HTTPS is recommended for production.
+### 3. Machine Learning (Isolated Experimentation)
+Located in the `ml/` directory.
+This module is intended for local training, evaluation, and future scalability. It does not directly affect the running Node.js API.
+- **Models:**
+  - **Logistic Regression:** Eligibility Classifier (Binary prediction for scheme eligibility).
+  - **XGBoost:** Multi-Scheme Ranker (Multi-label model to rank top schemes for a profile).
+- **Explainability:** LIME and SHAP are used to provide demo-ready explanations for predictions.
+- **Data:** Uses MongoDB or falls back to local JSON seed data.
 
-## Backend environment
+---
 
-Create `backend/.env` from `backend/.env.example` and set:
+## 🚀 Setup & Installation
 
-- `PORT=5000`
-- `MONGODB_URI=...`
-- `GROQ_API_KEY=...`
-- `CORS_ORIGIN=...` optional comma-separated web origins. Leave unset for Expo/mobile development.
+### Prerequisites
+- Node.js
+- MongoDB instance (local or Atlas)
+- Python 3 (for ML scripts)
+- Expo Go app on your phone (or a simulator)
 
-The backend listens on `0.0.0.0` so it can receive traffic on AWS EC2.
+### Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   Copy `.env.example` to `.env` and fill in the values:
+   ```env
+   PORT=5000
+   MONGODB_URI=your_mongodb_connection_string
+   GROQ_API_KEY=your_groq_api_key
+   # GOOGLE_APPLICATION_CREDENTIALS=path/to/google-credentials.json (For Speech-to-Text)
+   ```
+4. Start the server:
+   ```bash
+   npm start
+   ```
 
-## AWS EC2 security group
+### Frontend Setup
+1. Navigate to the project root:
+   ```bash
+   cd ..
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Environment Configuration:
+   Configure the app to point to your backend by creating a `.env` in the root:
+   ```env
+   EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:5000/api
+   ```
+   *(Note: For physical devices, use your computer's local network IP address or an EC2 public IP, not `localhost` or `127.0.0.1`.)*
+4. Start the Expo development server:
+   ```bash
+   npm start
+   ```
 
-For the mobile app to reach the backend, the EC2 security group must allow inbound TCP traffic for your backend port, usually `5000`. For production, put the API behind HTTPS on ports `443`/`80` through Nginx, a load balancer, or API Gateway, and point `EXPO_PUBLIC_API_URL` to the HTTPS URL.
+### Machine Learning Setup (Optional)
+1. Navigate to the `ml/` directory:
+   ```bash
+   cd ml
+   ```
+2. Create and activate a Python virtual environment:
+   ```bash
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\activate
+   # macOS/Linux:
+   source .venv/bin/activate
+   ```
+3. Install ML dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run ML scripts (from the project root), for example:
+   ```bash
+   python -m ml.datasets.generate_training_data --n-citizens 600
+   python -m ml.training.train_logistic_regression
+   ```
 
-## Development
+---
 
-```bash
-npm install
-npm run web
-```
+## 📱 Running the Application
+You can run the entire stack using the root `package.json` scripts:
+- Start only the frontend: `npm run start`
+- Start only the backend: `npm run server`
+- Start both concurrently: `npm run dev`
 
-```bash
-cd backend
-npm install
-npm start
-```
+Once the Expo server starts, scan the QR code with the Expo Go app on your mobile device to test the application.

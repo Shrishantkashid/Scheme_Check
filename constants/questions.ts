@@ -112,9 +112,10 @@ export const ONBOARDING_QUESTIONS: Record<string, Question> = {
     kannadaText: 'ನೀವು ಬಿಪಿಎಲ್ ಕಾರ್ಡ್ ಹೊಂದಿದ್ದೀರಾ?',
     type: 'choice',
     options: [
-      { label: 'Yes', value: 'yes', isFinal: true },
-      { label: 'No', value: 'no', isFinal: true },
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' },
     ],
+    isFinal: true,
   },
 };
 

@@ -70,10 +70,31 @@ const SchemeSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  aiSummary: {
+    type: String,
+    default: '',
+  },
+  youtubeQuery: {
+    type: String,
+    default: '',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+  sourceSlug: {
+    type: String,
+    unique: true,
+    sparse: true // Allows null/missing for old seeded data
+  },
+  sourceUrl: {
+    type: String,
+    default: '',
+  },
+  lastScrapedAt: {
+    type: Date,
+    default: null,
+  }
 });
 
 module.exports = mongoose.model('Scheme', SchemeSchema);

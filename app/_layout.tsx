@@ -11,23 +11,27 @@ export const unstable_settings = {
 };
 
 import { AuthProvider } from '@/context/auth';
-
+import { LanguageProvider } from '@/context/language';
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="signup" options={{ presentation: 'card', headerShown: false }} />
-            <Stack.Screen name="login" options={{ presentation: 'card', headerShown: false }} />
-            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="signup" options={{ presentation: 'card', headerShown: false }} />
+              <Stack.Screen name="login" options={{ presentation: 'card', headerShown: false }} />
+              <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+              <Stack.Screen name="scheme/[id]" options={{ headerShown: false }} />
+              <Stack.Screen name="news/[id]" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+            </Stack>
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </LanguageProvider>
       </AuthProvider>
     </GestureHandlerRootView>
   );

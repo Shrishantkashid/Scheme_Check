@@ -13,6 +13,7 @@ import { API_BASE_URL } from '@/constants/config';
 import { apiFetch, getApiErrorMessage, parseApiResponse } from '@/constants/api';
 import { Colors } from '@/constants/theme';
 import { useAuth } from '@/context/auth';
+import { useLanguage } from '@/context/language';
 
 export default function SignUpScreen() {
   const [fullName, setFullName] = useState('');
@@ -20,6 +21,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signIn } = useAuth();
+  const { t } = useLanguage();
 
   const handleSignUp = async () => {
     if (!fullName || !email || !password) {
@@ -86,19 +88,19 @@ export default function SignUpScreen() {
           </TouchableOpacity>
 
           <Animated.View entering={FadeInUp.delay(200).duration(800)} style={styles.header}>
-            <ThemedText style={styles.headline}>Create Account</ThemedText>
-            <ThemedText style={styles.subheadline}>Join the elite circle of financial intelligence.</ThemedText>
+            <ThemedText style={styles.headline}>{t('create_account')}</ThemedText>
+            <ThemedText style={styles.subheadline}>{t('join_circle')}</ThemedText>
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(400).duration(800)} style={styles.form}>
             <GlassInput 
-              placeholder="Full Name" 
+              placeholder={t('full_name')} 
               icon="person-outline"
               value={fullName}
               onChangeText={setFullName}
             />
             <GlassInput 
-              placeholder="Email Address" 
+              placeholder={t('email_address')} 
               icon="mail-outline" 
               keyboardType="email-address"
               autoCapitalize="none"
@@ -106,7 +108,7 @@ export default function SignUpScreen() {
               onChangeText={setEmail}
             />
             <GlassInput 
-              placeholder="Password" 
+              placeholder={t('password')} 
               icon="lock-closed-outline" 
               secureTextEntry
               value={password}
@@ -128,14 +130,14 @@ export default function SignUpScreen() {
                 {isLoading ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <ThemedText style={styles.signUpButtonText}>Sign Up</ThemedText>
+                  <ThemedText style={styles.signUpButtonText}>{t('sign_up')}</ThemedText>
                 )}
               </LinearGradient>
             </TouchableOpacity>
 
             <View style={styles.dividerContainer}>
               <View style={styles.divider} />
-              <ThemedText style={styles.dividerText}>OR CONTINUE WITH</ThemedText>
+              <ThemedText style={styles.dividerText}>{t('or_continue_with')}</ThemedText>
               <View style={styles.divider} />
             </View>
 
@@ -148,14 +150,14 @@ export default function SignUpScreen() {
               onPress={testAPI} 
               style={{ marginTop: 20, padding: 10, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 10, alignItems: 'center' }}
             >
-              <ThemedText style={{ color: '#00FF00', fontWeight: 'bold' }}>TEST BACKEND</ThemedText>
+              <ThemedText style={{ color: '#00FF00', fontWeight: 'bold' }}>{t('test_backend')}</ThemedText>
             </TouchableOpacity>
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(600).duration(800)} style={styles.footer}>
             <TouchableOpacity onPress={() => router.push('/login')}>
               <ThemedText style={styles.footerText}>
-                Already have an account? <ThemedText style={styles.footerLink}>Sign In</ThemedText>
+                {t('already_have_account')} <ThemedText style={styles.footerLink}>{t('sign_in')}</ThemedText>
               </ThemedText>
             </TouchableOpacity>
           </Animated.View>
