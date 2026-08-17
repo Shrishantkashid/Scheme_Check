@@ -102,6 +102,28 @@ export const ONBOARDING_QUESTIONS: Record<string, Question> = {
     kannadaText: 'ನಿಮಗೆ ಯಾವುದೇ ದೈಹಿಕ ಅಂಗವೈಕಲ್ಯ ಇದೆಯೇ?',
     type: 'choice',
     options: [
+      { label: 'Yes', value: 'yes', next: 'marital_status' },
+      { label: 'No', value: 'no', next: 'marital_status' },
+    ],
+  },
+  marital_status: {
+    id: 'marital_status',
+    text: 'What is your marital status?',
+    kannadaText: 'ನಿಮ್ಮ ವೈವಾಹಿಕ ಸ್ಥಿತಿ ಏನು?',
+    type: 'choice',
+    options: [
+      { label: 'Single', value: 'single', next: 'minority' },
+      { label: 'Married', value: 'married', next: 'minority' },
+      { label: 'Widowed', value: 'widowed', next: 'minority' },
+      { label: 'Divorced', value: 'divorced', next: 'minority' },
+    ],
+  },
+  minority: {
+    id: 'minority',
+    text: 'Do you belong to a minority community?',
+    kannadaText: 'ನೀವು ಅಲ್ಪಸಂಖ್ಯಾತ ಸಮುದಾಯಕ್ಕೆ ಸೇರಿದವರೇ?',
+    type: 'choice',
+    options: [
       { label: 'Yes', value: 'yes', next: 'bpl_card' },
       { label: 'No', value: 'no', next: 'bpl_card' },
     ],

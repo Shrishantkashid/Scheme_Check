@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+groq
+pydantic
+pymongo
+python-dotenv

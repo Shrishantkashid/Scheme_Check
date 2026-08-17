@@ -32,6 +32,7 @@ export default function OnboardingSelection() {
       icon: 'mic-outline',
       color: ['#ec4899', '#f43f5e'],
       route: '/onboarding/voice',
+      badge: 'Beta',
     },
     {
       id: 'aadhar',
@@ -67,7 +68,7 @@ export default function OnboardingSelection() {
                   onPress={() => router.push(method.route as any)}
                   style={styles.methodCard}
                 >
-                  <BlurView intensity={20} tint="light" style={styles.methodBlur}>
+                  <BlurView intensity={20} tint="dark" style={styles.methodBlur}>
                     <LinearGradient
                       colors={method.color as any}
                       start={{ x: 0, y: 0 }}
@@ -78,7 +79,14 @@ export default function OnboardingSelection() {
                     </LinearGradient>
                     
                     <View style={styles.methodInfo}>
-                      <ThemedText style={styles.methodTitle}>{method.title}</ThemedText>
+                      <ThemedText style={styles.methodTitle}>
+                        {method.title}
+                        {method.badge && (
+                          <View style={styles.badge}>
+                            <ThemedText style={styles.badgeText}>{method.badge}</ThemedText>
+                          </View>
+                        )}
+                      </ThemedText>
                       <ThemedText style={styles.methodDescription}>{method.description}</ThemedText>
                     </View>
                     
@@ -158,6 +166,23 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  badge: {
+    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+    marginLeft: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(236, 72, 153, 0.5)',
+  },
+  badgeText: {
+    color: '#ec4899',
+    fontSize: 10,
+    fontWeight: '800',
+    textTransform: 'uppercase',
   },
   methodDescription: {
     fontSize: 14,

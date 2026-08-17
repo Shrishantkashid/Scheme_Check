@@ -155,7 +155,7 @@ export function QuestionEngine({ onComplete, mode, voiceTrigger, onQuestionChang
 
           {(currentQuestion.type === 'number' || currentQuestion.type === 'text') && (
             <View style={styles.textInputWrapper}>
-              <BlurView intensity={20} tint="light" style={styles.textInputBlur}>
+              <BlurView intensity={20} tint="dark" style={styles.textInputBlur}>
                 <TextInput
                   style={styles.textInput}
                   placeholder={currentQuestion.type === 'number' ? 'Enter number' : 'Type here...'}

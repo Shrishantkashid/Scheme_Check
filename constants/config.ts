@@ -10,17 +10,38 @@
  *    to something like https://api.yourdomain.com/api.
  */
 
+import { Platform, NativeModules } from "react-native";
+
 const DEFAULT_API_URL = "https://scheme-check.onrender.com/api";
 
 const normalizeApiUrl = (url: string) => url.trim().replace(/\/+$/, "");
 
-const configuredApiUrl = process.env.EXPO_PUBLIC_API_URL;
+let configuredApiUrl = process.env.EXPO_PUBLIC_API_URL;
+
+// Dynamically determine the backend IP during development if a local IP is configured
+if (__DEV__) {
+  const isLocalEnvUrl =
+    !configuredApiUrl ||
+    configuredApiUrl.includes("localhost") ||
+    configuredApiUrl.includes("127.0.0.1") ||
+    /http:\/\/(192\.168\.|10\.|172\.)/.test(configuredApiUrl);
+
+  if (isLocalEnvUrl) {
+    if (Platform.OS === "web") {
+      configuredApiUrl = "http://localhost:5000/api";
+    } else {
+      const scriptURL = NativeModules.SourceCode?.scriptURL;
+      if (scriptURL) {
+        const match = scriptURL.match(/https?:\/\/([^:]+)/);
+        if (match && match[1]) {
+          const packagerIp = match[1];
+          // Use the packager IP to hit the local backend
+          configuredApiUrl = `http://${packagerIp}:5000/api`;
+        }
+      }
+    }
+  }
+}
 
 export const API_URL = normalizeApiUrl(configuredApiUrl || DEFAULT_API_URL);
 export const API_BASE_URL = API_URL.replace(/\/api$/, "");
-
-if (__DEV__ && API_URL.includes("YOUR_EC2_PUBLIC_IP")) {
-  console.warn(
-    "EXPO_PUBLIC_API_URL is not configured. Update DEFAULT_API_URL in constants/config.ts temporarily, or set EXPO_PUBLIC_API_URL to your backend URL.",
-  );
-}

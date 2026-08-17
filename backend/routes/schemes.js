@@ -5,6 +5,24 @@ const Scheme = require('../models/Scheme');
 const User = require('../models/User');
 const { getRecommendations, getCategoryNews } = require('../services/recommendationService');
 const { getTranslatedScheme } = require('../services/translationService');
+const { runDiscoveryPipeline } = require('../scheduler');
+const { fetchTutorials } = require('../services/youtubeService');
+
+/**
+ * @route   POST /api/schemes/internal/run-crawl
+ * @desc    Manually trigger the discovery crawler (protected)
+ * @access  Private (Admin only)
+ */
+router.post('/internal/run-crawl', auth, async (req, res) => {
+  // In a real app, verify req.user.role === 'admin'
+  try {
+    runDiscoveryPipeline();
+    res.json({ message: 'Discovery pipeline triggered successfully' });
+  } catch (error) {
+    console.error('Error triggering pipeline:', error);
+    res.status(500).json({ message: 'Failed to trigger pipeline' });
+  }
+});
 
 /**
  * @route   GET /api/schemes/recommend
@@ -60,7 +78,7 @@ router.get('/updates', auth, async (req, res) => {
 
 /**
  * @route   GET /api/schemes/:id
- * @desc    Get specific scheme details
+ * @desc    Get specific scheme details (and enrich tutorials if pending)
  * @access  Private
  */
 router.get('/:id', auth, async (req, res) => {
@@ -68,6 +86,32 @@ router.get('/:id', auth, async (req, res) => {
     let scheme = await Scheme.findById(req.params.id);
     if (!scheme) {
       return res.status(404).json({ message: 'Scheme not found' });
+    }
+
+    // Lazy enrich AI summary and YouTube tutorials if they are pending
+    if (scheme.enrichmentStatus === 'pending') {
+      console.log(`[SchemesRoute] On-demand AI enrichment for scheme: ${scheme.title}`);
+      try {
+        const { enrichSchemeWithAI } = require('../services/extractionService');
+        const enriched = await enrichSchemeWithAI(scheme);
+        scheme.aiSummary = enriched.aiSummary;
+        scheme.youtubeQuery = enriched.youtubeQuery;
+        
+        if (enriched.structuredEligibility) {
+          Object.assign(scheme.eligibility, enriched.structuredEligibility);
+        }
+        
+        console.log(`[SchemesRoute] Fetching YouTube tutorials for scheme: ${scheme.title}`);
+        const tutorials = await fetchTutorials(scheme);
+        scheme.tutorials = tutorials;
+        
+        scheme.enrichmentStatus = 'done';
+        await scheme.save();
+      } catch (err) {
+        console.error(`[SchemesRoute] Failed on-demand enrichment for ${scheme.title}:`, err.message);
+        // We won't mark as failed immediately so it can retry later, 
+        // or we could mark as failed. Let's just catch and proceed so we don't block the request.
+      }
     }
 
     const { lang = 'en' } = req.query;

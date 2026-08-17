@@ -1,6 +1,9 @@
 const express = require('express');
 const multer = require('multer');
-const speech = require('@google-cloud/speech');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const Groq = require('groq-sdk');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
@@ -12,11 +15,12 @@ const upload = multer({
   },
 });
 
-// Initialize Google Cloud Speech Client
-// This will automatically look for GOOGLE_APPLICATION_CREDENTIALS in .env
-const client = new speech.SpeechClient();
+// Initialize Groq Client
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 router.post('/transcribe', auth, upload.single('audio'), async (req, res) => {
+  let tempFilePath = null;
+
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No audio file provided' });
@@ -24,33 +28,24 @@ router.post('/transcribe', auth, upload.single('audio'), async (req, res) => {
 
     console.log(`[SPEECH] Transcribing audio for user: ${req.user.userId}`);
 
-    const audioBytes = req.file.buffer.toString('base64');
+    // Groq SDK requires a file stream, so we write the buffer to a temporary file
+    const ext = path.extname(req.file.originalname) || '.m4a';
+    tempFilePath = path.join(os.tmpdir(), `audio-${Date.now()}-${Math.random().toString(36).substring(7)}${ext}`);
+    fs.writeFileSync(tempFilePath, req.file.buffer);
 
-    const audio = {
-      content: audioBytes,
-    };
+    // Whisper uses ISO-639-1 language codes (e.g., 'kn' or 'en')
+    const requestedLanguage = req.body.languageCode || 'kn-IN';
+    const whisperLanguage = requestedLanguage.startsWith('en') ? 'en' : 'kn';
 
-    const config = {
-      encoding: 'WEBM_OPUS', // Default for most modern mobile recordings, will adjust if needed
-      sampleRateHertz: 48000, 
-      languageCode: 'kn-IN', // Kannada (India)
-      enableAutomaticPunctuation: true,
-      model: 'default'
-    };
+    const transcriptionResponse = await groq.audio.transcriptions.create({
+      file: fs.createReadStream(tempFilePath),
+      model: "whisper-large-v3",
+      language: whisperLanguage,
+      response_format: "json",
+      temperature: 0.0
+    });
 
-    // Google Cloud supports various encodings. 
-    // If WEBM_OPUS fails, we can try OGG_OPUS or MP3 depending on the device.
-    const request = {
-      audio: audio,
-      config: config,
-    };
-
-    // Detects speech in the audio file
-    const [response] = await client.recognize(request);
-    
-    const transcription = response.results
-      .map(result => result.alternatives[0].transcript)
-      .join('\n');
+    const transcription = transcriptionResponse.text || "";
 
     console.log(`[SPEECH] Result: "${transcription}"`);
 
@@ -58,10 +53,19 @@ router.post('/transcribe', auth, upload.single('audio'), async (req, res) => {
   } catch (error) {
     console.error('[SPEECH ERROR]', error);
     res.status(500).json({ 
-      message: 'Transcription failed', 
+      message: 'Transcription failed: ' + error.message, 
       error: error.message,
-      suggestion: 'Ensure google-credentials.json is present in the backend folder and GOOGLE_APPLICATION_CREDENTIALS is set in .env'
+      suggestion: 'Ensure GROQ_API_KEY is valid in .env'
     });
+  } finally {
+    // Clean up the temporary file
+    if (tempFilePath && fs.existsSync(tempFilePath)) {
+      try {
+        fs.unlinkSync(tempFilePath);
+      } catch (cleanupError) {
+        console.error('[SPEECH ERROR] Failed to clean up temp file:', cleanupError);
+      }
+    }
   }
 });
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Linking, ActivityIndicator, Dimensions } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Linking, ActivityIndicator, Dimensions, Image } from 'react-native';
+import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -16,7 +16,7 @@ import { Scheme } from '@/constants/data';
 const { width } = Dimensions.get('window');
 
 export default function SchemeDetailScreen() {
-  const { id } = useLocalSearchParams();
+  const { id, matchDetails } = useLocalSearchParams();
   const router = useRouter();
   const { token } = useAuth();
   const [scheme, setScheme] = useState<Scheme | null>(null);
@@ -29,6 +29,13 @@ export default function SchemeDetailScreen() {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await parseApiResponse<Scheme>(res);
+        if (matchDetails && typeof matchDetails === 'string') {
+          try {
+            data.matchDetails = JSON.parse(matchDetails);
+          } catch (e) {
+            console.error('Failed to parse matchDetails', e);
+          }
+        }
         setScheme(data);
       } catch (error) {
         console.error('Error fetching scheme details:', getApiErrorMessage(error));
@@ -39,6 +46,8 @@ export default function SchemeDetailScreen() {
 
     if (id && token) {
       fetchSchemeDetails();
+    } else if (!token) {
+      setLoading(false);
     }
   }, [id, token]);
 
@@ -69,6 +78,7 @@ export default function SchemeDetailScreen() {
 
   return (
     <ThemedView style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
       <AmbientBackground />
       
       <SafeAreaView style={styles.safeArea}>
@@ -97,6 +107,49 @@ export default function SchemeDetailScreen() {
             <ThemedText style={styles.description}>{scheme.description}</ThemedText>
           </View>
 
+          {scheme.matchDetails && (
+            <View style={styles.section}>
+              <ThemedText style={styles.sectionTitle}>Why we recommend this (AI)</ThemedText>
+              
+              <BlurView intensity={10} tint="light" style={styles.aiCard}>
+                <View style={styles.aiHeader}>
+                  <Ionicons name="sparkles" size={20} color={Colors.premium.primary} />
+                  <ThemedText style={styles.aiHeaderText}>Personalized Match</ThemedText>
+                </View>
+                
+                <View style={styles.aiDetailRow}>
+                  <View style={styles.aiDetailIcon}>
+                    <Ionicons name="person-circle-outline" size={20} color="#3b82f6" />
+                  </View>
+                  <View style={styles.aiDetailContent}>
+                    <ThemedText style={styles.aiDetailTitle}>Your Eligibility</ThemedText>
+                    <ThemedText style={styles.aiDetailText}>{scheme.matchDetails.coreMatch}</ThemedText>
+                  </View>
+                </View>
+
+                <View style={styles.aiDetailRow}>
+                  <View style={styles.aiDetailIcon}>
+                    <Ionicons name="gift-outline" size={20} color="#22c55e" />
+                  </View>
+                  <View style={styles.aiDetailContent}>
+                    <ThemedText style={styles.aiDetailTitle}>Your Benefits</ThemedText>
+                    <ThemedText style={styles.aiDetailText}>{scheme.matchDetails.benefits}</ThemedText>
+                  </View>
+                </View>
+
+                <View style={styles.aiDetailRow}>
+                  <View style={styles.aiDetailIcon}>
+                    <Ionicons name="arrow-forward-circle-outline" size={20} color="#eab308" />
+                  </View>
+                  <View style={styles.aiDetailContent}>
+                    <ThemedText style={styles.aiDetailTitle}>Next Steps</ThemedText>
+                    <ThemedText style={styles.aiDetailText}>{scheme.matchDetails.nextSteps}</ThemedText>
+                  </View>
+                </View>
+              </BlurView>
+            </View>
+          )}
+
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Benefits</ThemedText>
             <BlurView intensity={10} tint="light" style={styles.sectionCard}>
@@ -107,13 +160,34 @@ export default function SchemeDetailScreen() {
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Tags & Beneficiaries</ThemedText>
             <View style={styles.tagsContainer}>
-              {scheme.tags.map((tag, i) => (
+              {scheme.tags && scheme.tags.map((tag, i) => (
                 <View key={i} style={styles.tag}>
                   <ThemedText style={styles.tagText}># {tag}</ThemedText>
                 </View>
               ))}
             </View>
           </View>
+
+          {scheme.tutorials && scheme.tutorials.length > 0 && (
+            <View style={styles.section}>
+              <ThemedText style={styles.sectionTitle}>How to Apply (Tutorials)</ThemedText>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tutorialsContainer}>
+                {scheme.tutorials.map((tutorial, index) => (
+                  <TouchableOpacity 
+                    key={index} 
+                    style={styles.tutorialCard}
+                    onPress={() => Linking.openURL(`https://www.youtube.com/watch?v=${tutorial.videoId}`)}
+                  >
+                    <Image source={{ uri: tutorial.thumbnail }} style={styles.tutorialThumbnail} />
+                    <View style={styles.tutorialInfo}>
+                      <ThemedText style={styles.tutorialTitle} numberOfLines={2}>{tutorial.title}</ThemedText>
+                      <ThemedText style={styles.tutorialChannel} numberOfLines={1}>{tutorial.channelTitle}</ThemedText>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          )}
 
           {scheme.applyLink && (
             <View style={styles.footer}>
@@ -266,5 +340,81 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.3)',
     marginTop: 12,
     textAlign: 'center',
+  },
+  tutorialsContainer: {
+    gap: 16,
+    paddingRight: 24,
+  },
+  tutorialCard: {
+    width: 260,
+    backgroundColor: 'rgba(255,255,255,0.03)',
+    borderRadius: 16,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.05)',
+  },
+  tutorialThumbnail: {
+    width: '100%',
+    height: 140,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
+  tutorialInfo: {
+    padding: 12,
+  },
+  tutorialTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#FFF',
+    marginBottom: 4,
+    lineHeight: 20,
+  },
+  tutorialChannel: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.5)',
+  },
+  aiCard: {
+    padding: 20,
+    borderRadius: 20,
+    backgroundColor: 'rgba(99, 102, 241, 0.05)',
+    borderWidth: 1,
+    borderColor: 'rgba(99, 102, 241, 0.2)',
+  },
+  aiHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  aiHeaderText: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: Colors.premium.primary,
+  },
+  aiDetailRow: {
+    flexDirection: 'row',
+    marginBottom: 16,
+    gap: 12,
+  },
+  aiDetailIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aiDetailContent: {
+    flex: 1,
+  },
+  aiDetailTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFF',
+    marginBottom: 4,
+  },
+  aiDetailText: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.7)',
+    lineHeight: 20,
   },
 });

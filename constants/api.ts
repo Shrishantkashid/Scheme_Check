@@ -1,6 +1,6 @@
 import { API_URL } from "./config";
 
-const DEFAULT_TIMEOUT_MS = 15000;
+const DEFAULT_TIMEOUT_MS = 60000;
 
 export class ApiError extends Error {
   status?: number;

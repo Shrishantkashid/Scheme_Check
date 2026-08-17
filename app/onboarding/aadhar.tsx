@@ -107,7 +107,7 @@ export default function AadharOnboarding() {
           {!isScanning ? (
             <Animated.View entering={FadeInDown.delay(400)} style={styles.form}>
               <View style={styles.inputWrapper}>
-                <BlurView intensity={20} tint="light" style={styles.inputBlur}>
+                <BlurView intensity={20} tint="dark" style={styles.inputBlur}>
                   <Ionicons name="card-outline" size={20} color="rgba(255,255,255,0.4)" />
                   <TextInput
                     style={styles.input}
@@ -140,7 +140,7 @@ export default function AadharOnboarding() {
               </View>
 
               <TouchableOpacity style={styles.scanButton} onPress={startScanning}>
-                <BlurView intensity={20} tint="light" style={styles.scanBlur}>
+                <BlurView intensity={20} tint="dark" style={styles.scanBlur}>
                   <Ionicons name="qr-code-outline" size={24} color={Colors.premium.primary} />
                   <ThemedText style={styles.scanButtonText}>Scan QR Code on Card</ThemedText>
                 </BlurView>

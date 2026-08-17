@@ -16,6 +16,7 @@ import {
 import * as Speech from "expo-speech";
 import { Audio } from "expo-av";
 import Constants from "expo-constants";
+import { useAuth } from "@/context/auth";
 
 import {
   ONBOARDING_QUESTIONS,
@@ -46,7 +47,7 @@ interface Props {
 const API_BASE =
   Constants.expoConfig?.extra?.apiUrl ||
   process.env.EXPO_PUBLIC_API_URL ||
-  "http://localhost:5000/api";
+  (Platform.OS === 'android' ? "http://10.0.2.2:5000/api" : "http://localhost:5000/api");
 
 const MAX_RECORDING_DURATION_MS = 7000; // 7 seconds max per answer
 const SILENCE_TIMEOUT_MS = 2500;        // Auto-stop after 2.5s of assumed silence
@@ -59,6 +60,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
   onComplete,
   onFallbackToManual,
 }) => {
+  const { token } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [voiceState, setVoiceState] = useState<VoiceState>("idle");
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -201,28 +203,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       });
 
       const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync({
-        android: {
-          extension: ".wav",
-          outputFormat: Audio.AndroidOutputFormat.DEFAULT,
-          audioEncoder: Audio.AndroidAudioEncoder.DEFAULT,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          bitRate: 128000,
-        },
-        ios: {
-          extension: ".wav",
-          outputFormat: Audio.IOSOutputFormat.LINEARPCM,
-          audioQuality: Audio.IOSAudioQuality.HIGH,
-          sampleRate: 16000,
-          numberOfChannels: 1,
-          bitRate: 128000,
-          linearPCMBitDepth: 16,
-          linearPCMIsBigEndian: false,
-          linearPCMIsFloat: false,
-        },
-        web: {},
-      });
+      await recording.prepareToRecordAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
 
       await recording.startAsync();
       recordingRef.current = recording;
@@ -276,8 +257,8 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       const formData = new FormData();
       formData.append("audio", {
         uri: audioUri,
-        type: "audio/wav",
-        name: "voice_answer.wav",
+        type: "audio/m4a",
+        name: "voice_answer.m4a",
       } as unknown as Blob);
       formData.append("languageCode", language === "kn" ? "kn-IN" : "en-IN");
 
@@ -286,7 +267,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
         body: formData,
         headers: {
           Accept: "application/json",
-          // Do NOT set Content-Type for FormData — let React Native set it with boundary
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -302,6 +283,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       matchAndConfirm(transcribedText);
     } catch (err) {
       console.error("Transcription API error:", err);
+      Alert.alert("Network Error", "Failed to reach the transcription service. You can try again or tap your answer instead.");
       handleTranscriptionError();
     }
   };
@@ -319,18 +301,13 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       // Speak the confirmation back to the user
       const confirmText =
         language === "kn"
-          ? `ನೀವು ಆರಿಸಿದ್ದು: ${matched.labelKn}`
-          : `You selected: ${matched.labelEn}`;
+          ? `ನೀವು ಆರಿಸಿದ್ದು: ${matched.labelKn}. ಇದು ಸರಿಯಾಗಿದೆಯೇ?`
+          : `You selected: ${matched.labelEn}. Is this correct?`;
 
       Speech.speak(confirmText, {
         language: language === "kn" ? "kn-IN" : "en-IN",
         rate: 0.9,
       });
-
-      // Advance to next question after confirmation display
-      setTimeout(() => {
-        handleOptionSelected(matched.value);
-      }, CONFIRMATION_DISPLAY_MS);
     } else {
       // No match found — retry or ask to try again
       handleNoMatch(transcribedText);
@@ -355,7 +332,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
   };
 
   const handleNoMatch = (transcribedText: string) => {
-    if (retryCount < 2) {
+    if (retryCount < 1) {
       setRetryCount((c) => c + 1);
       const retryText =
         language === "kn"
@@ -368,7 +345,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       });
       setVoiceState("idle");
     } else {
-      // After 2 retries, show manual option selection
+      // After 1 retry, show manual option selection explicitly
       setVoiceState("error");
       Speech.speak(
         language === "kn"
@@ -381,7 +358,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
 
   const handleTranscriptionError = () => {
     setRetryCount((c) => c + 1);
-    if (retryCount >= 2) {
+    if (retryCount >= 1) {
       setVoiceState("error");
     } else {
       setVoiceState("idle");
@@ -472,10 +449,23 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       </Text>
 
       {/* ── Question ── */}
-      <View style={styles.questionCard}>
+      <TouchableOpacity 
+        style={styles.questionCard} 
+        activeOpacity={0.7}
+        onPress={() => {
+          Speech.stop();
+          Speech.speak(
+            language === "kn" ? currentQuestion.speakTextKn : currentQuestion.questionEn,
+            {
+              language: language === "kn" ? "kn-IN" : "en-IN",
+              rate: language === "kn" ? 0.85 : 0.9,
+            }
+          );
+        }}
+      >
         <Text style={styles.questionKn}>{currentQuestion.questionKn}</Text>
         <Text style={styles.questionEn}>{currentQuestion.questionEn}</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* ── Transcript Display (what we heard) ── */}
       {transcript.length > 0 && voiceState !== "confirmed" && (
@@ -493,11 +483,22 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
           <Text style={styles.confirmedText}>
             ✓ {confirmedOption.labelKn} / {confirmedOption.labelEn}
           </Text>
+          <View style={styles.confirmActionRow}>
+            <TouchableOpacity style={styles.confirmActionBtn} onPress={() => handleOptionSelected(confirmedOption.value)}>
+              <Text style={styles.confirmActionText}>{language === "kn" ? "ಖಚಿತಪಡಿಸಿ" : "Confirm"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.confirmActionBtnSecondary} onPress={startQuestionFlow}>
+              <Text style={styles.confirmActionTextSecondary}>{language === "kn" ? "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ" : "Try again"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.confirmActionBtnSecondary} onPress={() => setVoiceState("idle")}>
+              <Text style={styles.confirmActionTextSecondary}>{language === "kn" ? "ಟೈಪ್ ಮಾಡಿ" : "Type manually"}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
 
       {/* ── Mic Button (primary interaction) ── */}
-      {voiceState !== "error" && (
+      {voiceState !== "error" && voiceState !== "confirmed" && (
         <View style={styles.micContainer}>
           <TouchableOpacity
             onPress={() => {
@@ -507,7 +508,7 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
                 startQuestionFlow();
               }
             }}
-            disabled={voiceState === "processing" || voiceState === "confirmed"}
+            disabled={voiceState === "processing"}
             activeOpacity={0.8}
           >
             <Animated.View
@@ -541,10 +542,10 @@ const VoiceOnboardingWizard: React.FC<Props> = ({
       )}
 
       {/* ── Manual Option Fallback (shown on error or after retries) ── */}
-      {(voiceState === "error" || retryCount > 0) && (
+      {voiceState !== "confirmed" && (
         <View style={styles.optionsContainer}>
           <Text style={styles.orLabel}>
-            {language === "kn" ? "— ಅಥವಾ ಸ್ಪರ್ಶಿಸಿ —" : "— or tap —"}
+            {language === "kn" ? "— ಅಥವಾ ಸ್ಪರ್ಶಿಸಿ —" : "— or tap your answer —"}
           </Text>
           {currentQuestion.options.map((opt) => (
             <TouchableOpacity
@@ -694,6 +695,37 @@ const styles = StyleSheet.create({
     color: "#4ADE80",
     fontSize: 18,
     fontWeight: "700",
+    marginBottom: 12,
+  },
+  confirmActionRow: {
+    flexDirection: "row",
+    gap: 8,
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  confirmActionBtn: {
+    backgroundColor: "#16A34A",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  confirmActionText: {
+    color: "#FFFFFF",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+  confirmActionBtnSecondary: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "#4ADE80",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  confirmActionTextSecondary: {
+    color: "#4ADE80",
+    fontWeight: "600",
+    fontSize: 14,
   },
   micContainer: {
     alignItems: "center",

@@ -47,6 +47,12 @@ const SchemeSchema = new mongoose.Schema({
     },
     isBPLRequired: { type: Boolean, default: false },
     isDisabilityRequired: { type: Boolean, default: false },
+    minority: { type: String, enum: ['yes', 'no', 'all'], default: 'all' },
+    maritalStatus: { 
+      type: [String], 
+      enum: ['single', 'married', 'divorced', 'widowed', 'all'], 
+      default: ['all'] 
+    },
     landSizeMax: { type: Number, default: Infinity }, // for farmers
     residence: { type: String, enum: ['rural', 'urban', 'all'], default: 'all' },
   },
@@ -72,11 +78,25 @@ const SchemeSchema = new mongoose.Schema({
   },
   aiSummary: {
     type: String,
-    default: '',
+    default: null,
   },
   youtubeQuery: {
     type: String,
-    default: '',
+    default: null,
+  },
+  tutorials: {
+    type: [{
+      videoId: String,
+      title: String,
+      thumbnail: String,
+      channelTitle: String
+    }],
+    default: []
+  },
+  enrichmentStatus: {
+    type: String,
+    enum: ['pending', 'done', 'failed'],
+    default: 'pending',
   },
   createdAt: {
     type: Date,

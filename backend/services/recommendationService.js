@@ -6,147 +6,143 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+const { applyHardFilters, scoreSchemes } = require('./recommendationEngine');
+
+// In-memory cache for LLM explanations: Map<cacheKey, matchReason>
+// cacheKey = `${schemeId}_${userProfileHash}`
+const explanationCache = new Map();
+
+// Helper to generate a simple hash of the user profile for caching
+function hashProfile(profile) {
+  return JSON.stringify({
+    age: profile.age,
+    gender: profile.gender,
+    occupation: profile.occupation,
+    income: profile.income,
+    category: profile.category
+  });
+}
+
 /**
  * Recommendation Engine
- * Phase 1: Mongoose query filtering (Strict Eligibility)
- * Phase 2: Groq AI Ranking & Personalization
- * Phase 3: Dynamic Translation (if requested)
+ * Stage 1: Deterministic Filtering (Hard limits)
+ * Stage 2: Weighted Scoring
+ * Stage 3: LLM Explanations (Cached)
  */
 const getRecommendations = async (userProfile, targetLang = 'en') => {
   try {
-    const {
-      gender = 'all',
-      age = 25,
-      income = 0,
-      occupation = 'all',
-      category = 'general',
-      location = 'all',
-      disability = 'no',
-      bpl_card = 'no',
-      land_size = 0
-    } = userProfile;
-
-    // Phase 1: Deterministic Filtering
-    const query = {
-      $and: [
-        // Gender matching
-        { "eligibility.gender": { $in: [gender.toLowerCase(), 'all'] } },
-        // Age matching
-        { "eligibility.ageMin": { $lte: Number(age) } },
-        { "eligibility.ageMax": { $gte: Number(age) } },
-        // Income matching
-        { $or: [
-            { "eligibility.incomeMax": { $gte: Number(income) } },
-            { "eligibility.incomeMax": Infinity }
-          ] 
-        },
-        // Occupation matching
-        { "eligibility.occupations": { $in: [occupation.toLowerCase(), 'all'] } },
-        // Caste matching
-        { "eligibility.castes": { $in: [category.toLowerCase(), 'all'] } },
-        // Location matching
-        { "eligibility.residence": { $in: [location.toLowerCase(), 'all'] } }
-      ]
-    };
-
-    // Add specific filters for BPL and Disability if user doesn't have them
-    if (bpl_card === 'no') {
-      query["eligibility.isBPLRequired"] = false;
-    }
-    if (disability === 'no') {
-      query["eligibility.isDisabilityRequired"] = false;
-    }
-
-    // Sort by state (local state Karnataka first, then Central) or vice-versa
-    // For now, just find all that match the strict rules
-    const matches = await Scheme.find(query).limit(15);
-
-    if (matches.length === 0) {
+    // 1. Fetch the entire candidate pool (or a broad subset if DB gets huge)
+    const allSchemes = await Scheme.find({});
+    
+    // 2. Stage 1: Hard Filters
+    const eligibleSchemes = applyHardFilters(userProfile, allSchemes);
+    
+    if (eligibleSchemes.length === 0) {
       return {
         recommendations: [],
         aiConclusion: "No direct matches found based on your parameters. Try updating your profile for better results."
       };
     }
 
-    // Phase 2: AI Personalization (Groq)
-    // Create a summarized context for the LLM
-    const schemesContext = matches.map((s, index) => 
-      `${index + 1}. [${s.state}] ${s.title}: ${s.description}. Benefits: ${s.benefits}`
-    ).join('\n');
+    // 3. Stage 2: Weighted Scoring
+    const topSchemes = scoreSchemes(userProfile, eligibleSchemes, 15);
+    const profileHash = hashProfile(userProfile);
 
-    const prompt = `
-      You are an expert Government Scheme Advisor in India. 
-      The user profile is:
-      - Age: ${age}
-      - Gender: ${gender}
-      - Occupation: ${occupation}
-      - Annual Income: ₹${income}
-      - Category: ${category}
-      - Location: ${location}
-      - BPL Status: ${bpl_card}
-      - Disability: ${disability}
-      - Land Size: ${land_size} acres
-
-      Below are the schemes that currently match their strict eligibility criteria:
-      ${schemesContext}
-
-      TASK:
-      1. Rank these schemes based on the high impact and relevance to the user's profile.
-      2. Provide a "matchScore" (0-100) for each.
-      3. For the top 3 schemes, provide a "personalReason" why this is great for them specifically (in simple words).
-      4. Output only a valid JSON array of objects with keys: "schemeId" (use the index from context starting at 1), "title", "matchScore", "personalReason".
+    // 4. Stage 3: LLM Explanation Generation (Concurrent)
+    const promises = topSchemes.map(async (scheme) => {
+      const cacheKey = `${scheme._id}_${profileHash}_${targetLang}`;
       
-      Output JSON Format:
-      [
-        {"schemeId": 1, "title": "Scheme Name", "matchScore": 95, "personalReason": "..."},
-        ...
-      ]
-    `;
-
-    const completion = await groq.chat.completions.create({
-      messages: [
-        { role: "system", content: "You are a helpful assistant that provides JSON output." },
-        { role: "user", content: prompt }
-      ],
-      model: "llama-3.3-70b-versatile",
-      response_format: { type: "json_object" }
-    });
-
-    try {
-      const aiResponse = JSON.parse(completion.choices[0].message.content);
-      // It might return { "recommendations": [...] } or just the array depending on the exact interpretation
-      const rankedData = Array.isArray(aiResponse) ? aiResponse : (aiResponse.recommendations || Object.values(aiResponse)[0]);
-
-      // Map back to full scheme objects
-      let fullRecommendations = rankedData.map(item => {
-        const original = matches[item.schemeId - 1];
-        if (!original) return null;
+      // Check cache first
+      if (explanationCache.has(cacheKey)) {
+        const cachedExplanation = explanationCache.get(cacheKey);
         return {
-          ...original.toObject(),
-          matchScore: item.matchScore,
-          personalReason: item.personalReason
+          ...scheme,
+          matchReason: cachedExplanation.reason,
+          matchDetails: cachedExplanation.details
         };
-      }).filter(Boolean);
-
-      // Phase 3: Translation
-      if (targetLang !== 'en') {
-        fullRecommendations = await Promise.all(
-          fullRecommendations.map(s => getTranslatedScheme(s, targetLang))
-        );
       }
 
-      return {
-        recommendations: fullRecommendations.sort((a, b) => b.matchScore - a.matchScore),
-        aiConclusion: targetLang === 'kn' ? "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಆಧಾರದ ಮೇಲೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ." : "Highly recommended based on your profile."
+      // Fallback reason if LLM fails
+      const fallbackReason = scheme.matchedCriteria.join(', ') + '.';
+      const fallbackDetails = {
+        coreMatch: "Based on standard eligibility criteria.",
+        benefits: "General scheme benefits apply.",
+        nextSteps: "Check official portal for application steps."
       };
-    } catch (e) {
-      console.error("Failed to parse AI response:", completion.choices[0].message.content);
-      // Fallback to match results without AI ranking
-      return {
-        recommendations: matches.map(m => ({ ...m.toObject(), matchScore: 80, personalReason: "Matches your eligibility criteria." })),
-        aiConclusion: "Recommended based on your eligibility."
-      };
+      
+      try {
+        const prompt = `
+          You are an expert Government Scheme Advisor in India.
+          User Profile: Age ${userProfile.age}, Gender ${userProfile.gender}, Occupation ${userProfile.occupation}, Income ₹${userProfile.income}, Category ${userProfile.category}.
+          
+          Scheme: ${scheme.title}
+          Summary: ${scheme.description}
+          Why they matched (deterministic): ${scheme.matchedCriteria.join(', ')}
+          
+          TASK: Provide a detailed explanation of why the user qualifies for this scheme, what they get, and what to do next. Do NOT hallucinate. Do not use complex jargon.
+          Respond in ${targetLang === 'kn' ? 'Kannada' : 'English'}.
+          
+          Output ONLY a valid JSON object matching this exact structure:
+          {
+            "reason": "A short, 1-sentence summary of why they qualify.",
+            "details": {
+              "coreMatch": "Deep explanation of exactly why their specific demographics (age, gender, income, occupation) qualify them.",
+              "benefits": "What tangible benefits they will receive.",
+              "nextSteps": "Clear, actionable steps on how they should proceed."
+            }
+          }
+        `;
+
+        const completion = await groq.chat.completions.create({
+          messages: [
+            { role: "system", content: "You output valid JSON only." },
+            { role: "user", content: prompt }
+          ],
+          model: "llama-3.3-70b-versatile",
+          response_format: { type: "json_object" },
+          temperature: 0.3
+        });
+
+        const aiResponse = JSON.parse(completion.choices[0].message.content);
+        
+        const explanationData = {
+          reason: aiResponse.reason || fallbackReason,
+          details: aiResponse.details || fallbackDetails
+        };
+
+        // Cache the full explanation data
+        explanationCache.set(cacheKey, explanationData);
+
+        return {
+          ...scheme,
+          matchReason: explanationData.reason,
+          matchDetails: explanationData.details
+        };
+      } catch (err) {
+        console.error(`LLM failed for scheme ${scheme.title}:`, err);
+        return {
+          ...scheme,
+          matchReason: fallbackReason,
+          matchDetails: fallbackDetails
+        };
+      }
+    });
+
+    // Execute concurrently (Promise.all)
+    // Note: For a production scale app, we'd use a concurrency limit (e.g. p-limit) here.
+    let fullRecommendations = await Promise.all(promises);
+
+    // Phase 4: Translation (if needed for the rest of the scheme body)
+    if (targetLang !== 'en') {
+      fullRecommendations = await Promise.all(
+        fullRecommendations.map(s => getTranslatedScheme(s, targetLang))
+      );
     }
+
+    return {
+      recommendations: fullRecommendations,
+      aiConclusion: targetLang === 'kn' ? "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಆಧಾರದ ಮೇಲೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ." : "Highly recommended based on your profile."
+    };
 
   } catch (error) {
     console.error("Recommendation Service Error:", error);

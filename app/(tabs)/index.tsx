@@ -37,8 +37,14 @@ export default function DashboardScreen() {
           "Content-Type": "application/json"
         }
       });
-      const data = await parseApiResponse<{ recommendations: Scheme[] }>(res);
-      setRecommendations(data.recommendations);
+      const data = await parseApiResponse<any>(res);
+      if (data && Array.isArray(data.recommendations)) {
+        setRecommendations(data.recommendations);
+      } else if (Array.isArray(data)) {
+        setRecommendations(data);
+      } else {
+        setRecommendations([]);
+      }
     } catch (error) {
       console.error('Error fetching recommendations:', error);
       setRecommendations(SCHEMES.slice(0, 3));
@@ -99,7 +105,10 @@ export default function DashboardScreen() {
   const handleSchemePress = (scheme: Scheme) => {
     const id = scheme._id || scheme.id;
     if (id) {
-      router.push(`/scheme/${id}`);
+      router.push({
+        pathname: `/scheme/${id}`,
+        params: scheme.matchDetails ? { matchDetails: JSON.stringify(scheme.matchDetails) } : {}
+      });
     }
   };
 
@@ -266,7 +275,7 @@ function SchemeCard({ scheme, onPress }: { scheme: Scheme, onPress: () => void }
         </View>
         <ThemedText numberOfLines={1} style={styles.cardTitle}>{scheme.title}</ThemedText>
         <ThemedText numberOfLines={2} style={styles.cardReason}>
-          {scheme.personalReason || scheme.description}
+          {scheme.matchReason || scheme.description}
         </ThemedText>
         
         <View style={styles.cardFooter}>

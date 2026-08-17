@@ -25,7 +25,23 @@ function mapSchemeData(rawData, discoverySummary) {
   const content = rawData.schemeContent || {};
   const eligibility = rawData.eligibilityCriteria || {};
   
-  const state = basic.beneficiaryState || 'Central';
+  let state = 'Central';
+  
+  if (basic.state && basic.state.label) {
+    state = basic.state.label;
+  } else if (basic.level && basic.level.label) {
+    state = basic.level.label === 'Central' ? 'Central' : basic.level.label;
+  } else if (basic.beneficiaryState) {
+    const stateRaw = basic.beneficiaryState;
+    state = Array.isArray(stateRaw) ? stateRaw[0] : stateRaw;
+    if (state === 'All') state = 'Central';
+  }
+
+  // We only want to integrate Central and Karnataka schemes
+  if (state !== 'Central' && state !== 'Karnataka') {
+    throw new Error(`Skipping scheme: State '${state}' is not Central or Karnataka`);
+  }
+
   let category = basic.schemeCategory || discoverySummary.schemeCategory || 'Uncategorized';
   if (Array.isArray(category)) {
     category = category.map(c => typeof c === 'object' ? c.label : c).join(', ');
@@ -117,54 +133,62 @@ async function enrichSchemeWithAI(mappedData) {
     You are an AI assistant for a welfare schemes app.
     Given the scheme details below, provide:
     1. A short, plain-language summary (2-3 sentences max) explaining what this is and who it's for.
-    2. A highly specific YouTube search query string that a user could use to find a tutorial on how to apply for this exact scheme. (e.g. "How to apply for PM Kisan Yojana 2024 online steps")
+    2. A highly specific YouTube search query string that a user could use to find a tutorial on how to apply for this exact scheme.
+    3. Structured eligibility criteria extracted from the raw text.
 
     Scheme Name: ${mappedData.title}
     State: ${mappedData.state}
-    Description: ${mappedData.description.substring(0, 1000)}
-    Eligibility: ${mappedData.eligibility.rawText ? mappedData.eligibility.rawText.substring(0, 1000) : 'N/A'}
+    Description: ${mappedData.description ? mappedData.description.substring(0, 300) : 'N/A'}
+    Eligibility: ${mappedData.eligibility && mappedData.eligibility.rawText ? mappedData.eligibility.rawText.substring(0, 500) : 'N/A'}
 
     Output ONLY a valid JSON object in this format:
     {
       "aiSummary": "...",
-      "youtubeQuery": "..."
+      "youtubeQuery": "...",
+      "structuredEligibility": {
+        "ageMin": 0, // Number or null if not specified
+        "ageMax": 200, // Number or null if not specified
+        "gender": ["all"], // Array of "male", "female", "other", or "all"
+        "incomeMax": null, // Number (max annual income in INR) or null if not specified
+        "occupations": ["all"], // Array from: "farmer", "student", "daily_wage", "self_employed", "unemployed", "artisan", "all"
+        "castes": ["all"], // Array from: "general", "obc", "sc", "st", "all"
+        "isBPLRequired": false, // Boolean
+        "isDisabilityRequired": false, // Boolean
+        "minority": "all", // "yes", "no", or "all"
+        "maritalStatus": ["all"], // Array from: "single", "married", "divorced", "widowed", "all"
+        "residence": "all" // "rural", "urban", or "all"
+      }
     }
   `;
 
-  try {
-    const completion = await groq.chat.completions.create({
-      messages: [
-        { role: "system", content: "You generate helpful summaries and search queries. Output pure JSON only." },
-        { role: "user", content: prompt }
-      ],
-      model: "llama-3.3-70b-versatile",
-      response_format: { type: "json_object" }
-    });
+  const modelName = process.env.GROQ_ENRICHMENT_MODEL || 'llama-3.1-8b-instant';
 
-    const enrichments = JSON.parse(completion.choices[0].message.content);
-    
-    // Attach to mapped data
-    // (Assuming our schema gets updated to support these, or we just stick them on the object)
-    mappedData.aiSummary = enrichments.aiSummary;
-    mappedData.youtubeQuery = enrichments.youtubeQuery;
+  // Throw errors here so the enrichment pipeline can catch and mark 'failed'
+  const completion = await groq.chat.completions.create({
+    messages: [
+      { role: "system", content: "You generate helpful summaries and extract structured data. Output pure JSON only." },
+      { role: "user", content: prompt }
+    ],
+    model: modelName,
+    response_format: { type: "json_object" },
+    max_tokens: 600
+  });
 
-    return mappedData;
-  } catch (error) {
-    console.error(`AI Enrichment failed for ${mappedData.sourceSlug}:`, error.message);
-    // Non-fatal, we just return the mapped data without enrichments
-    return mappedData; 
+  const enrichments = JSON.parse(completion.choices[0].message.content);
+  
+  // Attach to mapped data
+  mappedData.aiSummary = enrichments.aiSummary;
+  mappedData.youtubeQuery = enrichments.youtubeQuery;
+  
+  // Attach structured eligibility if provided
+  if (enrichments.structuredEligibility) {
+    mappedData.structuredEligibility = enrichments.structuredEligibility;
   }
-}
 
-/**
- * Full extraction pipeline for a single scheme.
- */
-async function extractSchemeData(rawDetailData, discoverySummary) {
-  const mapped = mapSchemeData(rawDetailData, discoverySummary);
-  const enriched = await enrichSchemeWithAI(mapped);
-  return enriched;
+  return mappedData;
 }
 
 module.exports = {
-  extractSchemeData
+  mapSchemeData,
+  enrichSchemeWithAI
 };

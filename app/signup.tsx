@@ -62,17 +62,7 @@ export default function SignUpScreen() {
     }
   };
 
-  const testAPI = async () => {
-    try {
-      const res = await apiFetch(API_BASE_URL);
-      const text = await res.text();
-      console.log("TEST SUCCESS:", text);
-      Alert.alert("SUCCESS", text);
-    } catch (err) {
-      console.log("TEST ERROR:", err);
-      Alert.alert("ERROR", getApiErrorMessage(err, "Cannot reach backend"));
-    }
-  };
+
 
   return (
     <ThemedView style={styles.container}>
@@ -146,12 +136,6 @@ export default function SignUpScreen() {
               <SocialButton icon="logo-apple" />
             </View>
 
-            <TouchableOpacity 
-              onPress={testAPI} 
-              style={{ marginTop: 20, padding: 10, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 10, alignItems: 'center' }}
-            >
-              <ThemedText style={{ color: '#00FF00', fontWeight: 'bold' }}>{t('test_backend')}</ThemedText>
-            </TouchableOpacity>
           </Animated.View>
 
           <Animated.View entering={FadeInDown.delay(600).duration(800)} style={styles.footer}>

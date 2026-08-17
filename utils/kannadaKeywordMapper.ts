@@ -14,6 +14,14 @@ export interface OnboardingQuestionKeywords {
   options: OnboardingOption[];
 }
 
+export interface OnboardingQuestion {
+  id: string;
+  questionKn: string;
+  questionEn: string;
+  speakTextKn: string;
+  options: OnboardingOption[];
+}
+
 // ─────────────────────────────────────────────
 // KEYWORD MAPPINGS FOR ALL OPTIONS
 // ─────────────────────────────────────────────
@@ -180,6 +188,58 @@ export const QUESTION_KEYWORD_MAP: Record<string, OnboardingQuestionKeywords> = 
     ],
   },
 };
+
+export const ONBOARDING_QUESTIONS: OnboardingQuestion[] = [
+  {
+    id: "gender",
+    questionKn: "ನಿಮ್ಮ ಲಿಂಗ ಯಾವುದು? (ಗಂಡು / ಹೆಣ್ಣು / ಇತರರು)",
+    questionEn: "What is your gender? (Male / Female / Other)",
+    speakTextKn: "ನಿಮ್ಮ ಲಿಂಗ ಯಾವುದು? ಗಂಡು, ಹೆಣ್ಣು, ಅಥವಾ ಇತರರು?",
+    options: QUESTION_KEYWORD_MAP["gender"].options
+  },
+  {
+    id: "category",
+    questionKn: "ನಿಮ್ಮ ವರ್ಗ ಯಾವುದು? (ಸಾಮಾನ್ಯ / ಒಬಿಸಿ / ಎಸ್ ಸಿ / ಎಸ್ ಟಿ)",
+    questionEn: "What is your category? (General / OBC / SC / ST)",
+    speakTextKn: "ನಿಮ್ಮ ವರ್ಗ ಯಾವುದು? ಸಾಮಾನ್ಯ, ಒಬಿಸಿ, ಎಸ್ ಸಿ, ಅಥವಾ ಎಸ್ ಟಿ?",
+    options: QUESTION_KEYWORD_MAP["category"].options
+  },
+  {
+    id: "occupation",
+    questionKn: "ನಿಮ್ಮ ಉದ್ಯೋಗವೇನು? (ರೈತ / ವಿದ್ಯಾರ್ಥಿ / ದಿನ ಕೂಲಿ / ...)",
+    questionEn: "What is your occupation? (Farmer / Student / Daily Wage...)",
+    speakTextKn: "ನಿಮ್ಮ ಉದ್ಯೋಗವೇನು? ರೈತ, ವಿದ್ಯಾರ್ಥಿ, ಅಥವಾ ಬೇರೆ ಯಾವುದಾದರೂ?",
+    options: QUESTION_KEYWORD_MAP["occupation"].options
+  },
+  {
+    id: "education_level",
+    questionKn: "ನಿಮ್ಮ ಶಿಕ್ಷಣ ಮಟ್ಟವೇನು? (ಶಾಲಾ / ಪದವಿ / ಸ್ನಾತಕೋತ್ತರ)",
+    questionEn: "What is your education level? (School / UG / PG)",
+    speakTextKn: "ನಿಮ್ಮ ಶಿಕ್ಷಣ ಮಟ್ಟವೇನು? ಶಾಲಾ ಶಿಕ್ಷಣ, ಪದವಿ, ಅಥವಾ ಸ್ನಾತಕೋತ್ತರ?",
+    options: QUESTION_KEYWORD_MAP["education_level"].options
+  },
+  {
+    id: "location",
+    questionKn: "ನೀವು ಎಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದೀರಿ? (ಗ್ರಾಮೀಣ / ನಗರ)",
+    questionEn: "Where do you live? (Rural / Urban)",
+    speakTextKn: "ನೀವು ಎಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದೀರಿ? ಹಳ್ಳಿ, ಅಥವಾ ನಗರ?",
+    options: QUESTION_KEYWORD_MAP["location"].options
+  },
+  {
+    id: "disability",
+    questionKn: "ನೀವು ಅಂಗವಿಕಲರೇ? (ಹೌದು / ಇಲ್ಲ)",
+    questionEn: "Are you differently-abled? (Yes / No)",
+    speakTextKn: "ನಿಮಗೆ ಅಂಗವೈಕಲ್ಯ ಇದೆಯೇ? ಹೌದು ಅಥವಾ ಇಲ್ಲ ಎಂದು ಉತ್ತರಿಸಿ.",
+    options: QUESTION_KEYWORD_MAP["disability"].options
+  },
+  {
+    id: "bpl_card",
+    questionKn: "ನಿಮ್ಮ ಬಳಿ ಬಿಪಿಎಲ್ ಕಾರ್ಡ್ ಇದೆಯೇ? (ಹೌದು / ಇಲ್ಲ)",
+    questionEn: "Do you have a BPL card? (Yes / No)",
+    speakTextKn: "ನಿಮ್ಮ ಬಳಿ ಬಿಪಿಎಲ್ ರೇಷನ್ ಕಾರ್ಡ್ ಇದೆಯೇ? ಹೌದು ಅಥವಾ ಇಲ್ಲ?",
+    options: QUESTION_KEYWORD_MAP["bpl_card"].options
+  }
+];
 
 // ─────────────────────────────────────────────
 // CORE MATCHER

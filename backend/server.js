@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const speechRoutes = require("./routes/speech");
 const schemesRoutes = require("./routes/schemes");
+const { startScheduler } = require("./scheduler");
 
 const app = express();
 
@@ -37,8 +38,15 @@ app.use("/api/schemes", schemesRoutes);
 
 // Database Connection
 mongoose
-  .connect(process.env.MONGODB_URI, { family: 4 })
-  .then(() => console.log("MongoDB connected successfully"))
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("MongoDB connected successfully");
+    try {
+      startScheduler();
+    } catch (e) {
+      console.error("Failed to start scheduler:", e);
+    }
+  })
   .catch((err) => console.error("MongoDB connection error:", err));
 
 const PORT = process.env.PORT || 5000;

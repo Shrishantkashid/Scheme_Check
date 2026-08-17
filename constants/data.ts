@@ -9,7 +9,19 @@ export interface Scheme {
   beneficiary?: string;
   benefits?: string;
   matchScore?: number;
-  personalReason?: string;
+  matchReason?: string;
+  matchDetails?: {
+    coreMatch: string;
+    benefits: string;
+    nextSteps: string;
+  };
+  applyLink?: string;
+  tutorials?: {
+    videoId: string;
+    title: string;
+    thumbnail: string;
+    channelTitle: string;
+  }[];
 }
 
 export const SCHEMES: Scheme[] = [

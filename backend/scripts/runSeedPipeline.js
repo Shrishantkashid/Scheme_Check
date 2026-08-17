@@ -2,7 +2,7 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') }
 const mongoose = require('mongoose');
 const { discoverSchemes, delay } = require('../services/discoveryService');
 const { fetchSchemeDetail } = require('../services/schemeDetailService');
-const { extractSchemeData } = require('../services/extractionService');
+const { mapSchemeData } = require('../services/extractionService');
 const { processSchemeDuplicates } = require('../services/duplicateChecker');
 const Scheme = require('../models/Scheme');
 
@@ -27,7 +27,7 @@ async function main() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
 
-    console.log(`Starting API Pipeline... (limit=${limit || 'none'}, from=${offset})`);
+    console.log(`Starting Seed Pipeline... (limit=${limit || 'none'}, from=${offset})`);
     
     // 1. Discovery
     // discoverSchemes returns an array of simple overview objects
@@ -54,19 +54,22 @@ async function main() {
         // Fetch full raw details
         const rawDetail = await fetchSchemeDetail(slug);
         
-        // Map to our schema & enrich with Groq
-        const extractedData = await extractSchemeData(rawDetail, summary);
+        // Map to our schema deterministically (NO Groq AI here)
+        const extractedData = mapSchemeData(rawDetail, summary);
 
         // Deduplicate
         const dupCheckResult = await processSchemeDuplicates(extractedData);
 
         // Save
         if (dupCheckResult.action === 'insert') {
+          // By default, Mongoose will set enrichmentStatus to 'pending'
           await Scheme.create(extractedData);
-          console.log(`[INSERTED] New scheme saved: ${extractedData.title}`);
+          console.log(`[INSERTED] New scheme saved (pending AI enrichment): ${extractedData.title}`);
           successCount++;
         } else if (dupCheckResult.action === 'update') {
-          // Safe auto-update of non-critical fields
+          // Safe auto-update of non-critical fields.
+          // Note: we intentionally do NOT update aiSummary, youtubeQuery, or enrichmentStatus here 
+          // to avoid downgrading a 'done' status.
           await Scheme.findByIdAndUpdate(dupCheckResult.schemeId, {
             $set: {
               description: extractedData.description,
@@ -75,8 +78,6 @@ async function main() {
               applyLink: extractedData.applyLink,
               procedure: extractedData.procedure,
               tags: extractedData.tags,
-              aiSummary: extractedData.aiSummary,
-              youtubeQuery: extractedData.youtubeQuery,
               lastScrapedAt: extractedData.lastScrapedAt
             }
           });
@@ -102,7 +103,7 @@ async function main() {
       }
     }
 
-    console.log('\n--- Pipeline Execution Summary ---');
+    console.log('\n--- Seed Pipeline Execution Summary ---');
     console.log(`Total Found: ${discoveredSchemes.length}`);
     console.log(`Inserted:    ${successCount}`);
     console.log(`Updated:     ${updateCount}`);
