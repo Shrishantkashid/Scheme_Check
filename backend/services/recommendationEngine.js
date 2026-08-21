@@ -216,7 +216,7 @@ function scoreSchemes(userProfile, schemes, limit = 15) {
   });
 
   return scoredSchemes
-    .filter(scheme => scheme.matchScore >= 60) // Require more than just passing hard filters
+    .filter(scheme => scheme.matchScore >= 50) // Allow schemes that pass basic eligibility (score 50)
     .sort((a, b) => b.matchScore - a.matchScore)
     .slice(0, limit);
 }
