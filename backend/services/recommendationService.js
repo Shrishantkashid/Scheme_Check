@@ -98,7 +98,7 @@ const getRecommendations = async (userProfile, targetLang = 'en') => {
             { role: "system", content: "You output valid JSON only." },
             { role: "user", content: prompt }
           ],
-          model: "llama-3.3-70b-versatile",
+          model: "openai/gpt-oss-120b",
           response_format: { type: "json_object" },
           temperature: 0.3
         });
@@ -171,7 +171,7 @@ const getCategoryNews = async (userProfile) => {
         { role: "system", content: "You are a helpful assistant that outputs ONLY valid JSON." },
         { role: "user", content: prompt }
       ],
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-120b",
       response_format: { type: "json_object" }
     });
 

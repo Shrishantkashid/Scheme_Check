@@ -161,7 +161,7 @@ async function enrichSchemeWithAI(mappedData) {
     }
   `;
 
-  const modelName = process.env.GROQ_ENRICHMENT_MODEL || 'llama-3.1-8b-instant';
+  const modelName = process.env.GROQ_ENRICHMENT_MODEL || 'openai/gpt-oss-120b';
 
   // Throw errors here so the enrichment pipeline can catch and mark 'failed'
   const completion = await groq.chat.completions.create({

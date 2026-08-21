@@ -9,6 +9,6 @@ start "SchemesCheck Backend" cmd /k "cd backend && node server.js"
 
 :: Start the Expo development server
 echo [FRONTEND] Starting Expo Developer Tools...
-npm start
+call npm start
 
 pause

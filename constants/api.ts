@@ -69,7 +69,7 @@ export const apiFetch = async (path: string, options: ApiFetchOptions = {}) => {
     }
 
     throw new ApiError(
-      `Unable to reach the server. Check that your AWS backend URL is correct and reachable from this device. Current API URL: ${API_URL}`,
+      `Unable to reach the server. Check that your backend URL is correct and reachable from this device. Current API URL: ${API_URL}`,
     );
   } finally {
     clearTimeout(timeout);
